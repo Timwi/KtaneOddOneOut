@@ -233,7 +233,7 @@ public class OddOneOutModule : MonoBehaviour
         // NUMBER PUZZLES
         () =>
         {
-            switch (Rnd.Range(0, 3))
+            switch (Rnd.Range(0, 2))
             {
                 // The numbers have the same value modulo 3, 4, 6 or 7, except for one.
                 case 0:
@@ -258,26 +258,6 @@ public class OddOneOutModule : MonoBehaviour
                             };
                     }
 
-                // The numbers have the same number of digits, except for one.
-                case 1:
-                    while (true)
-                    {
-                        var numbers = Enumerable.Range(0, 5).Select(_ => Rnd.Range(10, 100)).ToList();
-                        var ix = Rnd.Range(0, 6);
-                        numbers.Insert(ix, Rnd.Range(1, 10));
-                        if (!isValidModuloPuzzle(numbers) && !isValidZoniPuzzle(numbers))
-                            return new StageInfo
-                            {
-                                CorrectIndex = ix,
-                                Setup = (m, i) =>
-                                {
-                                    m.setButtonLabel(i, numbers[i].ToString(), size: 92);
-                                    m._puzzleLedColor = 2;
-                                },
-                                Logging = _omitLogging ? null : "Numbers with 2 digits"
-                            };
-                    }
-
                 // The numbers all have the same number of dots or dashes in Zoni, except for one.
                 default:
                     while (true)
@@ -295,7 +275,7 @@ public class OddOneOutModule : MonoBehaviour
                                 Setup = (m, i) =>
                                 {
                                     m.setButtonLabel(i, numbers[i].ToString(), size: 92);
-                                    m._puzzleLedColor = 3;
+                                    m._puzzleLedColor = 2;
                                 },
                                 Logging = _omitLogging ? null : string.Format("Numbers with {0} {1} in Zoni", targetIx, useDots ? "dots" : "dashes")
                             };
