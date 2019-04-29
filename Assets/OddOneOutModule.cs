@@ -757,7 +757,13 @@ public class OddOneOutModule : MonoBehaviour
                     var badNote = Enumerable.Range(0, 12).Where(n => n != (9 + offset) % 12 && n != (11 + offset) % 12 && !majorScale.Contains(n)).PickRandom();
                     var ix = Rnd.Range(0, 6);
                     majorScale.Insert(ix, badNote);
-                    return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, _noteNames[majorScale[i]].PickRandom(), m.MusicFont, m.MusicFontMaterial, 92); }, Logging = _omitLogging ? null : string.Format("First five notes of the {0} major scale", _noteNames[offset]) };
+                    var noteNames = majorScale.Select(note => _noteNames[note].PickRandom()).ToArray();
+                    return new StageInfo
+                    {
+                        CorrectIndex = ix,
+                        Setup = (m, i) => { m.setButtonLabel(i, noteNames[i], m.MusicFont, m.MusicFontMaterial, 92); },
+                        Logging = _omitLogging ? null : string.Format("First five notes of the {0} major scale", _noteNames[offset])
+                    };
                 }
 
                 // Zoo animals

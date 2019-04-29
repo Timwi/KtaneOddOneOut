@@ -14,15 +14,8 @@ MonoBehaviour:
   id: OddOneOut
   title: Odd One Out
   author: 
-  description: 'Odd One Out.
-
-
-    Module created by Timwi.
-
-
-    This is an on-going manual challenge. The community is challenged to deduce the
-    rules of this module and write a manual for it. The manual will be published when
-    the challenge is over.'
+  description: "Find the one that doesn\u2019t belong.\n\nModule created by Timwi.\n\n[url=http://ktane.timwi.de/PDF/Odd%20One%20Out.pdf]Manual
+    PDF[/url]\n[url=http://ktane.timwi.de/HTML/Odd%20One%20Out.html]Manual HTML[/url]"
   version: 1.0
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 2b678e249a492654fbae58fecafc97ca, type: 3}
