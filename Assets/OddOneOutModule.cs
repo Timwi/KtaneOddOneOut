@@ -38,6 +38,7 @@ public class OddOneOutModule : MonoBehaviour
     public Texture[] CountryFlagTextures;
     public Texture[] ZooAnimalTextures;
     public Texture[] QuestionMarkTextures;
+    public Texture[] FriendshipSymbols;
 
     public Font StandardFont;
     public Font ZoniFont;
@@ -55,7 +56,6 @@ public class OddOneOutModule : MonoBehaviour
 
     private readonly char?[] _showMorse = new char?[6];
     private readonly string[] _showOnHover = new string[6];
-    private float _showOnHoverWidth = .0015f;
     private Coroutine _curCoroutine;
     private int _puzzleLedColor;
 
@@ -94,21 +94,21 @@ public class OddOneOutModule : MonoBehaviour
     private static readonly string[] _wordsModules = "Password,Extended Password,Poetry,Tap Code,Braille,Word Search,Anagrams,Word Scramble".Split(',');
     private static readonly string[][] _words = newArray(
         // Password
-        "ABOUT;AFTER;AGAIN;BELOW;COULD;EVERY;FIRST;FOUND;GREAT;HOUSE;LARGE;LEARN;NEVER;OTHER;PLACE;PLANT;POINT;RIGHT;SMALL;SOUND;SPELL;STILL;STUDY;THEIR;THERE;THESE;THING;THINK;THREE;WATER;WHERE;WHICH;WORLD;WOULD;WRITE".Split(';'),
+        "about;after;again;below;could;every;first;found;great;house;large;learn;never;other;place;plant;point;right;small;sound;spell;still;study;their;there;these;thing;think;three;water;where;which;world;would;write".Split(';'),
         // Extended Password
-        "ADJUST;ANCHOR;BOWTIE;BUTTON;CIPHER;CORNER;DAMPEN;DEMOTE;ENLIST;EVOLVE;FORGET;FINISH;GEYSER;GLOBAL;HAMMER;HELIUM;IGNITE;INDIGO;JIGSAW;JULIET;KARATE;KEYPAD;LAMBDA;LISTEN;MATTER;MEMORY;NEBULA;NICKEL;OVERDO;OXYGEN;PEANUT;PHOTON;QUARTZ;QUEBEC;RESIST;RIDDLE;SIERRA;STRIKE;TEAPOT;TWENTY;UNTOLD;ULTIMA;VICTOR;VIOLET;WITHER;WRENCH;XENONS;XYLOSE;YELLOW;YOGURT;ZENITH;ZODIAC".Split(';'),
+        "adjust;anchor;bowtie;button;cipher;corner;dampen;demote;enlist;evolve;forget;finish;geyser;global;hammer;helium;ignite;indigo;jigsaw;juliet;karate;keypad;lambda;listen;matter;memory;nebula;nickel;overdo;oxygen;peanut;photon;quartz;quebec;resist;riddle;sierra;strike;teapot;twenty;untold;ultima;victor;violet;wither;wrench;xenons;xylose;yellow;yogurt;zenith;zodiac".Split(';'),
         // Poetry
-        "CLARITY;ENERGY;FLOW;CROWD;FATIGUE;OCEAN;HEART;RELAX;HOLLOW;WEATHER;DANCE;BUNNY;WORDS;LOVELY;BLACK;PAST;ROMANCE;COOKIES;GAZE;FUTURE".Split(';'),
+        "clarity;energy;flow;sunshine;crowd;fatigue;ocean;heart;relax;hollow;reflection;weather;dance;bunny;identity;words;weightless;lovely;black;past;morality;romance;cookies;solitary;gaze;future;compassion".Split(';'),
         // Tap Code
-        "CHILD;STYLE;SHAKE;ALIVE;AXION;WRECK;CAUSE;PUPIL;CHEAT;WATCH;JELLY;CLOCK;QUARK;GRASS;LASER;JEANS;YACHT;RUMOR;FAULT;HOVER;SHEET;AWARE;SHELL;JOLLY;GIANT;VAGUE;IMAGE;ACUTE;ARENA;VISIT;TABLE;FORCE;CHAIR;QUICK;SUITE;LARGE;CHORD;POWER;ALOOF;ATTIC;COVER;PRIZE;TRAIL;CYCLE;SIGHT;ZEROS;GLARE;ANGLE;RANCH;UPSET;MIXER;DRIVE;XENON;WATER;VENOM;RIGHT;SWEET;GLOOM;CLASH;ABBEY;LEVEL;QUILT;CLIMB;TEASE;KNOCK;FAIRY;QUEEN;ZEBRA;GUIDE;SOUTH;FUNNY;PROUD;YOUNG;JUMPY;STAFF;QUERY;TRUNK;ZOOMS;SMART;GHOST;JUDGE;YIELD;BRAIN;HELIX;SMALL;NOISE;SEIZE;ROBOT;STAIN;WHERE;WORLD;SHARK;BEARD;DISCO;YUMMY;TITLE;STORY;COLOR;SHORT;FRESH".Split(';'),
+        "child;style;shake;alive;axion;wreck;cause;pupil;cheat;watch;jelly;clock;quark;grass;laser;jeans;yacht;rumor;fault;hover;sheet;aware;shell;jolly;giant;vague;image;acute;arena;visit;table;force;chair;quick;suite;large;chord;power;aloof;attic;cover;prize;trail;cycle;sight;zeros;glare;angle;ranch;upset;mixer;drive;xenon;water;venom;right;sweet;gloom;clash;abbey;level;quilt;climb;tease;knock;fairy;queen;zebra;guide;south;funny;proud;young;jumpy;staff;query;trunk;zooms;smart;ghost;judge;yield;brain;helix;small;noise;seize;robot;stain;where;world;shark;beard;disco;yummy;title;story;color;short;fresh".Split(';'),
         // Braille
-        "ACTING;DATING;HEADING;MEANING;SERVER;AIMING;DEALER;HEARING;MINERS;SHAKING;ARTIST;EATING;HEATING;NEARER;SOUGHT;ASKING;EIGHTH;HIGHER;PARISH;STAYING;BEARING;FARMER;INSIST;PARKER;STRANDS;BEATING;FARMING;LASTED;PARKING;STRINGS;BEINGS;FASTER;LAYING;PAYING;TEACHING;BINDING;FATHER;LEADER;POWERS;TENDED;BOUGHT;FINDING;LEADING;PUSHED;TENDER;BOXING;FINEST;LEANED;PUSHING;TESTING;BREACH;FINISH;LEANING;RATHER;THROWING;BREAST;FLYING;LEAVING;REACHING;TOWERS;BREATH;FOSTER;LINKING;READER;VESTED;BREATHE;FOUGHT;LISTED;READING;WARNED;BRINGING;GAINING;LISTEN;RESTING;WARNING;BRINGS;GATHER;LIVING;RIDING;WEAKER;CARERS;GAZING;MAKING;RUSHED;WEALTH;CARTER;GENDER;MARKED;RUSHING;WINNER;CHARTER;GROWING;MARKING;SAYING;WINNING;CRYING;HEADED;MASTER;SERVED;WINTER".Split(';'),
+        "acting;dating;heading;meaning;server;aiming;dealer;hearing;miners;shaking;artist;eating;heating;nearer;sought;asking;eighth;higher;parish;staying;bearing;farmer;insist;parker;strands;beating;farming;lasted;parking;strings;beings;faster;laying;paying;teaching;binding;father;leader;powers;tended;bought;finding;leading;pushed;tender;boxing;finest;leaned;pushing;testing;breach;finish;leaning;rather;throwing;breast;flying;leaving;reaching;towers;breath;foster;linking;reader;vested;breathe;fought;listed;reading;warned;bringing;gaining;listen;resting;warning;brings;gather;living;riding;weaker;carers;gazing;making;rushed;wealth;carter;gender;marked;rushing;winner;charter;growing;marking;saying;winning;crying;headed;master;served;winter".Split(';'),
         // Word Search
-        "ALARM;BEEP;BLUE;CALL;CHECK;COLOR;DONE;EAST;ECHO;EDGE;EXPERT;FALSE;FIND;FOUR;GREEN;JINX;LETTER;LISTEN;LOCATE;LOOK;NEXT;NORTH;OFFICE;OSCAR;QUEBEC;RED;SERIAL;SIX;SOLVE;SPELL;SUBMIT;TANGO;TIMER;TWENTY;UNIQUE;WORD;XRAY;YES".Split(';'),
+        "alarm;beep;blue;call;check;color;done;east;echo;edge;expert;false;find;four;green;jinx;letter;listen;locate;look;next;north;office;oscar;quebec;red;serial;six;solve;spell;submit;tango;timer;twenty;unique;word;xray;yes".Split(';'),
         // Anagrams
-        "STREAM;MASTER;TAMERS;LOOPED;POODLE;POOLED;CELLAR;CALLER;RECALL;SEATED;SEDATE;TEASED;RESCUE;SECURE;RECUSE;RASHES;SHEARS;SHARES;BARELY;BARLEY;BLEARY;DUSTER;RUSTED;RUDEST".Split(';'),
+        "stream;master;tamers;looped;poodle;pooled;cellar;caller;recall;seated;sedate;teased;rescue;secure;recuse;rashes;shears;shares;barely;barley;bleary;duster;rusted;rudest".Split(';'),
         // Word Scramble
-        "ARCHER;ATTACK;BANANA;BLASTS;BURSTS;BUTTON;CANNON;CASING;CHARGE;DAMAGE;DEFUSE;DEVICE;DISARM;FLAMES;KABOOM;KEVLAR;KEYPAD;LETTER;MODULE;MORTAR;NAPALM;OTTAWA;PERSON;ROBOTS;ROCKET;SAPPER;SEMTEX;WEAPON;WIDGET;WIRING".Split(';'));
+        "archer;attack;banana;blasts;bursts;button;cannon;casing;charge;damage;defuse;device;disarm;flames;kaboom;kevlar;keypad;letter;module;mortar;napalm;ottawa;person;robots;rocket;sapper;semtex;weapon;widget;wiring".Split(';'));
 
     private static readonly string[] _namesModules = "Human Resources,Ice Cream,Identity Parade,Mafia,Retirement,Schlag den Bomb,Subways".Split(',');
     private static readonly string[][] _names = newArray(
@@ -140,6 +140,74 @@ public class OddOneOutModule : MonoBehaviour
     private static readonly string[][] _benedictTable = @"dict,bee,king,boom,burner,batch,swort,sack,patch;dryl,boi,dil,bait,swick,thatch,cheese,horn,butt;drive,basher,coot,butt,don,snatch,clock,rash,horn;dink,bong,top,blast,snap,bund,sore,fish,man;bus,buzz,trap,stic,whale,cooch,bath,butt,sprout;juice,stick,burg,dick,rock,sniff,dinck,pants,dong;snatch,pest,boop,buck,box,stick,snoot,crush,ship;ton,blaster,dirk,blow,town,dell,sniff,mite,rash;saur,berry,bub,tonk,shack,bath,some,clomp,snutch;dang,milk,cash,ray,ster,chord,wealth,fish,flage".Split(';').Select(str => str.Split(',')).ToArray();
 
     private static readonly Dictionary<string, int> _countrySizes = new Dictionary<string, int> { { "Afghanistan", 667 }, { "Albania", 714 }, { "Algeria", 667 }, { "Andorra", 700 }, { "Angola", 667 }, { "Antigua and Barbuda", 667 }, { "Argentina", 643 }, { "Armenia", 500 }, { "Australia", 500 }, { "Austria", 667 }, { "Azerbaijan", 500 }, { "Bahamas", 500 }, { "Bangladesh", 600 }, { "Barbados", 667 }, { "Belarus", 500 }, { "Belgium", 667 }, { "Belize", 667 }, { "Benin", 667 }, { "Bhutan", 667 }, { "Bolivia", 682 }, { "Bosnia and Herzegovina", 500 }, { "Botswana", 667 }, { "Brazil", 700 }, { "Brunei", 500 }, { "Bulgaria", 600 }, { "Burkina Faso", 667 }, { "Burundi", 600 }, { "Cabo Verde", 588 }, { "Cambodia", 667 }, { "Cameroon", 667 }, { "Canada", 500 }, { "Central African Republic", 667 }, { "Chad", 667 }, { "Chile", 667 }, { "China", 667 }, { "Colombia", 667 }, { "Comoros", 600 }, { "Republic of the Congo", 667 }, { "Costa Rica", 600 }, { "Côte d’Ivoire", 667 }, { "Croatia", 500 }, { "Cuba", 500 }, { "Cyprus", 600 }, { "Czech Republic", 667 }, { "North Korea", 500 }, { "Democratic Republic of the Congo", 667 }, { "Denmark", 757 }, { "Djibouti", 667 }, { "Dominica", 500 }, { "Dominican Republic", 625 }, { "Ecuador", 500 }, { "Egypt", 667 }, { "El Salvador", 564 }, { "Equatorial Guinea", 667 }, { "Eritrea", 500 }, { "Estonia", 636 }, { "Eswatini", 667 }, { "Ethiopia", 500 }, { "Fiji", 500 }, { "Finland", 611 }, { "France", 667 }, { "Gabon", 750 }, { "The Gambia", 667 }, { "Georgia", 667 }, { "Germany", 600 }, { "Ghana", 667 }, { "Greece", 667 }, { "Grenada", 600 }, { "Guatemala", 625 }, { "Guinea", 667 }, { "Guinea-Bissau", 500 }, { "Guyana", 600 }, { "Haiti", 600 }, { "Honduras", 500 }, { "Hungary", 500 }, { "Iceland", 720 }, { "India", 667 }, { "Iran", 571 }, { "Iraq", 667 }, { "Ireland", 500 }, { "Israel", 727 }, { "Italy", 667 }, { "Jamaica", 500 }, { "Japan", 667 }, { "Jordan", 500 }, { "Kazakhstan", 500 }, { "Kenya", 667 }, { "Kiribati", 500 }, { "Kuwait", 500 }, { "Kyrgyzstan", 600 }, { "Laos", 667 }, { "Latvia", 500 }, { "Lebanon", 667 }, { "Lesotho", 667 }, { "Liberia", 526 }, { "Libya", 500 }, { "Liechtenstein", 600 }, { "Lithuania", 600 }, { "Luxembourg", 600 }, { "Madagascar", 667 }, { "Malawi", 667 }, { "Malaysia", 500 }, { "Maldives", 667 }, { "Mali", 667 }, { "Malta", 667 }, { "Marshall Islands", 526 }, { "Mauritania", 667 }, { "Mauritius", 667 }, { "Mexico", 571 }, { "Federated States of Micronesia", 526 }, { "Mongolia", 500 }, { "Montenegro", 500 }, { "Morocco", 667 }, { "Mozambique", 667 }, { "Myanmar", 556 }, { "Namibia", 667 }, { "Nauru", 500 }, { "Nepal", 1222 }, { "Netherlands", 667 }, { "New Zealand", 500 }, { "Nicaragua", 600 }, { "Niger", 857 }, { "Nigeria", 500 }, { "North Macedonia", 500 }, { "Norway", 727 }, { "Oman", 500 }, { "Pakistan", 667 }, { "Palau", 625 }, { "Panama", 667 }, { "Papua New Guinea", 750 }, { "Paraguay", 600 }, { "Peru", 667 }, { "Philippines", 500 }, { "Poland", 625 }, { "Portugal", 667 }, { "South Korea", 667 }, { "Moldova", 500 }, { "Romania", 667 }, { "Russia", 667 }, { "Rwanda", 667 }, { "Saint Kitts and Nevis", 667 }, { "Saint Lucia", 500 }, { "Saint Vincent and the Grenadines", 667 }, { "Samoa", 500 }, { "San Marino", 750 }, { "São Tomé and Príncipe", 500 }, { "Saudi Arabia", 667 }, { "Senegal", 667 }, { "Serbia", 667 }, { "Seychelles", 500 }, { "Sierra Leone", 667 }, { "Singapore", 667 }, { "Slovakia", 667 }, { "Slovenia", 500 }, { "Solomon Islands", 500 }, { "Somalia", 667 }, { "South Africa", 667 }, { "South Sudan", 500 }, { "Spain", 667 }, { "Sri Lanka", 500 }, { "Sudan", 500 }, { "Suriname", 667 }, { "Sweden", 625 }, { "Switzerland", 1000 }, { "Syria", 667 }, { "Tajikistan", 500 }, { "Thailand", 667 }, { "Timor-Leste", 500 }, { "Togo", 618 }, { "Tonga", 500 }, { "Trinidad and Tobago", 600 }, { "Tunisia", 667 }, { "Turkey", 667 }, { "Turkmenistan", 667 }, { "Tuvalu", 500 }, { "Uganda", 667 }, { "Ukraine", 667 }, { "United Arab Emirates", 500 }, { "United Kingdom", 500 }, { "Tanzania", 667 }, { "United States", 526 }, { "Uruguay", 667 }, { "Uzbekistan", 500 }, { "Vanuatu", 600 }, { "Venezuela", 667 }, { "Vietnam", 667 }, { "Yemen", 667 }, { "Zambia", 667 }, { "Zimbabwe", 500 } };
+
+    private static readonly string[][] _friendshipSymbolGroups = newArray(
+        new[] { "Amethyst Star", "Apple Cinnamon", "Apple Fritter", "Babs Seed", "Berryshine", "Big McIntosh", "Bulk Biceps", "Cadance", "Golden Harvest", "Celestia", "Cheerilee", "Cheese Sandwich", "Cherry Jubilee", "Coco Pommel" },
+        new[] { "Vinyl Scratch", "Twist", "Twilight Velvet", "Trouble Shoes", "Trixie", "Trenderhoof", "Tree Hugger", "Toe Tapper", "Time Turner", "Thunderlane", "Sweetie Drops", "Suri Polomare", "Sunset Shimmer", "Sunburst" },
+        new[] { "Coloratura", "Daisy", "Daring Do", "Derpy", "Diamond Tiara", "Double Diamond", "Filthy Rich", "Granny Smith", "Hoity Toity", "Lightning Dust", "Lily", "Luna", "Lyra", "Maud Pie" },
+        new[] { "Starlight Glimmer", "Spoiled Rich", "Silverstar", "Silver Spoon", "Silver Shill", "Shining Armor", "Screwball", "Rose", "Octavia Melody", "Nurse Redheart", "Night Light", "Ms. Harshwhinny", "Moon Dancer", "Mayor Mare" });
+    private static readonly string[] _friendshipSymbolGroupNames = new[] { "top row", "left column", "right column", "bottom row" };
+
+    private static readonly string[][] _londonUndergroundStations = newArray(
+        new[] { "Stonebridge Park", "Harlesden", "Willesden Junction", "Kensal Green", "Queen’s Park", "Kilburn Park", "Maida Vale", "Warwick Avenue", "Paddington", "Edgware Road", "Marylebone", "Baker Street", "Regent’s Park", "Oxford Circus", "Piccadilly Circus", "Charing Cross", "Embankment", "Waterloo", "Lambeth North", "Elephant & Castle" },
+        new[] { "Hanger Lane", "Ealing Broadway", "West Acton", "North Acton", "East Acton", "White City/Wood Lane", "Shepherd’s Bush", "Holland Park", "Notting Hill Gate", "Queensway", "Lancaster Gate", "Marble Arch", "Bond Street", "Oxford Circus", "Tottenham Court Road", "Holborn", "Chancery Lane", "St. Paul’s", "Monument/Bank", "Liverpool Street", "Bethnal Green", "Mile End", "Stratford", "Leyton", "Leytonstone" },
+        new[] { "Hammersmith", "Goldhawk Road", "Shepherd’s Bush Market", "White City/Wood Lane", "Latimer Road", "Ladbroke Grove", "Westbourne Park", "Royal Oak", "Paddington", "Edgware Road", "Bayswater", "Notting Hill Gate", "High Street Kensington", "Gloucester Road", "South Kensington", "Sloane Square", "Victoria", "St. James’s Park", "Westminster", "Embankment", "Temple", "Blackfriars", "Mansion House", "Cannon Street", "Monument/Bank", "Tower Hill", "Aldgate", "Liverpool Street", "Moorgate", "Barbican", "Farringdon", "King’s Cross St. Pancras", "Euston Square", "Great Portland Street", "Baker Street" },
+        new[] { "Ealing Broadway", "Ealing Common", "Acton Town", "Chiswick Park", "Turnham Green", "Stamford Brook", "Ravenscourt Park", "Hammersmith", "Barons Court", "West Kensington", "Earl’s Court", "Gloucester Road", "South Kensington", "Sloane Square", "Victoria", "St. James’s Park", "Westminster", "Embankment", "Temple", "Blackfriars", "Mansion House", "Cannon Street", "Monument/Bank", "Tower Hill", "Aldgate East", "Whitechapel", "Stepney Green", "Mile End", "Bow Road", "Bromley-by-Bow", "West Ham", "Plaistow", "Upton Park", "East Ham", "High Street Kensington", "Notting Hill Gate", "Bayswater", "Paddington", "Edgware Road" },
+        new[] { "Hammersmith", "Goldhawk Road", "Shepherd’s Bush Market", "White City/Wood Lane", "Latimer Road", "Ladbroke Grove", "Westbourne Park", "Royal Oak", "Paddington", "Edgware Road", "Baker Street", "Great Portland Street", "Euston Square", "King’s Cross St. Pancras", "Farringdon", "Barbican", "Moorgate", "Liverpool Street", "Aldgate East", "Whitechapel", "Stepney Green", "Mile End", "Bow Road", "Bromley-by-Bow", "West Ham", "Plaistow", "Upton Park", "East Ham" },
+        new[] { "Neasden", "Dollis Hill", "Willesden Green", "Kilburn", "West Hampstead", "Finchley Road", "Swiss Cottage", "St. John’s Wood", "Baker Street", "Bond Street", "Green Park", "Westminster", "Waterloo", "Southwark", "London Bridge", "Bermondsey", "Canada Water", "Canary Wharf", "North Greenwich", "Canning Town", "West Ham", "Stratford" },
+        new[] { "Wembley Park", "Finchley Road", "Baker Street", "Great Portland Street", "Euston Square", "King’s Cross St. Pancras", "Farringdon", "Barbican", "Moorgate", "Liverpool Street", "Aldgate" },
+        new[] { "Clapham South", "Clapham Common", "Clapham North", "Stockwell", "Oval", "Kennington", "Waterloo", "Embankment", "Charing Cross", "Leicester Square", "Tottenham Court Road", "Goodge Street", "Warren Street", "Euston", "Mornington Crescent", "Camden Town", "Chalk Farm", "Belsize Park", "Hampstead", "Golders Green", "Brent Cross", "Hendon Central", "Elephant & Castle", "Borough", "London Bridge", "Monument/Bank", "Moorgate", "Old Street", "Angel", "King’s Cross St. Pancras", "Kentish Town", "Tufnell Park", "Archway", "Highgate", "East Finchley" },
+        new[] { "Northfields", "South Ealing", "Acton Town", "Turnham Green", "Hammersmith", "Barons Court", "Earl’s Court", "Gloucester Road", "South Kensington", "Knightsbridge", "Hyde Park Corner", "Green Park", "Piccadilly Circus", "Leicester Square", "Covent Garden", "Holborn", "Russell Square", "King’s Cross St. Pancras", "Caledonian Road", "Holloway Road", "Arsenal", "Finsbury Park", "Manor House", "Turnpike Lane", "Wood Green", "Bounds Green" },
+        new[] { "Brixton", "Stockwell", "Vauxhall", "Pimlico", "Victoria", "Green Park", "Oxford Circus", "Warren Street", "Euston", "King’s Cross St. Pancras", "Highbury & Islington", "Finsbury Park", "Seven Sisters", "Tottenham Hale", "Blackhorse Road", "Walthamstow Central" });
+    private static readonly string[] _londonUndergroundLines = new[] { "Bakerloo Line", "Central Line", "Circle Line", "District Line", "Hammersmith & City Line", "Jubilee Line", "Metropolitan Line", "Northern Line", "Piccadilly Line", "Victoria Line" };
+
+    private static readonly string[][] _simonSpeaksWords = @"black,sort,zwart,nigra,musta,noir,schwarz,fekete,nero;blue,blå,blauw,blua,sininen,bleu,blau,kék,blu;green,grøn,groen,verda,vihreä,vert,grün,zöld,verde;cyan,turkis,turkoois,turkisa,turkoosi,turquoise,türkis,türkiz,turchese;red,rød,rood,,punainen,rouge,rot,piros,rosso;purple,lilla,paars,purpura,purppura,pourpre,lila,bíbor,porpora;yellow,gul,geel,flava,keltainen,jaune,gelb,sárga,giallo;white,hvid,wit,blanka,valkoinen,blanc,weiß,fehér,bianco;gray,grå,grijs,griza,harmaa,gris,grau,szürke,grigio".Split(';').Select(row => row.Split(',')).ToArray();
+    private static readonly string[] _simonSpeaksColumns = @"English,Danish,Dutch,Esperanto,Finnish,French,German,Hungarian,Italian".Split(',');
+    private static readonly string[] _simonSpeaksRows = @"black,blue,green,cyan,red,purple,yellow,white,gray".Split(',');
+
+    private static readonly string[] _ikeaProducts = @"Säng,Skåp,Stol,Gardiner,Skrivbord,Fläkt,Täcke,Handduk".Split(',');
+    private static readonly string[] _ikeaBrands = @"Känga,Skål,Godis,Ost,Färg,Drake,Hörlurar,Köttbulle,Åttahörning,Måla,Valp,Tvättbjörn,Skjorta,Sko,Enhörning,Trollkarl".Split(',');
+
+    private sealed class Lion { public string Name; public int AliveFrom; public int AliveUntil; }
+    private static readonly Lion[] _lionsShareLions = @"Taka,2,11;Mufasa,1,5;Uru,1,6;Ahadi,1,4;Zama,1,3;Mohatu,1,2;Kion,13,16;Kiara,12,16;Kopa,12,13;Kovu,11,16;Vitani,10,16;Nuka,9,13;Mheetu,6,16;Zira,6,13;Nala,5,16;Simba,4,15;Sarabi,1,14;Sarafina,1,12"
+        .Split(';').Select(l => l.Split(',')).Select(arr => new Lion { Name = arr[0], AliveFrom = int.Parse(arr[1]), AliveUntil = int.Parse(arr[2]) }).ToArray();
+
+    private static readonly int[] _primes = new[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97 };
+
+    private sealed class DiseaseInfo { public string Disease; public string[] Symptoms; }
+    private static readonly DiseaseInfo[] _drDoctorDiseases = newArray(
+        new DiseaseInfo { Disease = "Alztimer’s", Symptoms = new[] { "Fever", "Chills", "Dizziness" } },
+        new DiseaseInfo { Disease = "Braintenance", Symptoms = new[] { "Headache", "Sleepiness", "Thirstiness" } },
+        new DiseaseInfo { Disease = "Color allergy", Symptoms = new[] { "Bloating", "Cough", "Diarrhea" } },
+        new DiseaseInfo { Disease = "Detonession", Symptoms = new[] { "Dizziness", "Fatigue", "Fever" } },
+        new DiseaseInfo { Disease = "Emojilepsy", Symptoms = new[] { "Headache", "Muscle Cramp", "Nausea" } },
+        new DiseaseInfo { Disease = "Foot and Morse", Symptoms = new[] { "Throat irritation", "Constipation", "Foot swelling" } },
+        new DiseaseInfo { Disease = "Gout of Life", Symptoms = new[] { "Hallucination", "Cold Hands", "Excessive Crying" } },
+        new DiseaseInfo { Disease = "HRV", Symptoms = new[] { "Gas", "Numbness", "Loss of Smell" } },
+        new DiseaseInfo { Disease = "Indicitis", Symptoms = new[] { "Bloating", "Fever", "Hallucination" } },
+        new DiseaseInfo { Disease = "Jaundry", Symptoms = new[] { "Disappearance of the Ears", "Fever", "Shortness of Breath" } },
+        new DiseaseInfo { Disease = "Keypad stones", Symptoms = new[] { "Headache", "Sleepiness", "Fever" } },
+        new DiseaseInfo { Disease = "Legomania", Symptoms = new[] { "Cough", "Excessive Crying", "Muscle Cramp" } },
+        new DiseaseInfo { Disease = "Microcontusion", Symptoms = new[] { "Fever", "Chills", "Dizziness" } },
+        new DiseaseInfo { Disease = "Narcolization", Symptoms = new[] { "Numbness", "Constipation", "Fatigue" } },
+        new DiseaseInfo { Disease = "OCd", Symptoms = new[] { "Sleepiness", "Dizziness", "Thirstiness" } },
+        new DiseaseInfo { Disease = "Piekinson’s", Symptoms = new[] { "Sleepiness", "Cold Hands", "Thirstiness" } },
+        new DiseaseInfo { Disease = "Quackgrounds", Symptoms = new[] { "Chills", "Loss of Smell", "Throat irritation" } },
+        new DiseaseInfo { Disease = "Royal Flu", Symptoms = new[] { "Thirstiness", "Fever", "Headache" } },
+        new DiseaseInfo { Disease = "Seizure Siphor", Symptoms = new[] { "Constipation", "Bloating", "Hallucination" } },
+        new DiseaseInfo { Disease = "Tetrinus", Symptoms = new[] { "Hallucination", "Cold Hands", "Dizziness" } },
+        new DiseaseInfo { Disease = "Urinary LEDs", Symptoms = new[] { "Chills", "Nausea", "Numbness" } },
+        new DiseaseInfo { Disease = "Verticode", Symptoms = new[] { "Loss of Smell", "Cold Hands", "Sleepiness" } },
+        new DiseaseInfo { Disease = "Widgeting", Symptoms = new[] { "Thirstiness", "Cough", "Fatigue" } },
+        new DiseaseInfo { Disease = "XMAs", Symptoms = new[] { "Diarrhea", "Sleepiness", "Foot swelling" } },
+        new DiseaseInfo { Disease = "Yes-no infection", Symptoms = new[] { "Gas", "Throat irritation", "Muscle Cramp" } },
+        new DiseaseInfo { Disease = "Zooties", Symptoms = new[] { "Muscle Cramp", "Constipation", "Sleepiness" } },
+        new DiseaseInfo { Disease = "Chronic Talk", Symptoms = new[] { "Throat irritation", "Cough", "Foot swelling" } },
+        new DiseaseInfo { Disease = "Jukepox", Symptoms = new[] { "Sleepiness", "Headache", "Dizziness" } },
+        new DiseaseInfo { Disease = "Neurolysis", Symptoms = new[] { "Foot swelling", "Excessive Crying", "Nausea" } },
+        new DiseaseInfo { Disease = "Perspective Loss", Symptoms = new[] { "Sleepiness", "Bloating", "Dizziness" } },
+        new DiseaseInfo { Disease = "Orientitis", Symptoms = new[] { "Gas", "Numbness", "Loss of Smell" } },
+        new DiseaseInfo { Disease = "Huntington’s disease", Symptoms = new[] { "Cold Hands", "Sleepiness", "Throat irritation" } });
 
     static OddOneOutModule()
     {
@@ -231,600 +299,674 @@ public class OddOneOutModule : MonoBehaviour
 
     private static readonly Func<StageInfo>[] _generators = newArray<Func<StageInfo>>(
         // NUMBER PUZZLES
-        () =>
-        {
-            switch (Rnd.Range(0, 2))
-            {
-                // The numbers have the same value modulo 3, 4, 6 or 7, except for one.
-                case 0:
-                    while (true)
-                    {
-                        var mod = _modNumbers.PickRandom();
-                        var target = Rnd.Range(0, mod);
-                        var numbers = Enumerable.Range(0, int.MaxValue).Select(_ => Rnd.Range(0, 100 / mod) * mod + target).Distinct().Take(5).ToList();
-                        var badNumber = Rnd.Range(0, (100 - mod) / mod) * mod + target + 1 + Rnd.Range(0, mod - 1);
-                        var ix = Rnd.Range(0, 6);
-                        numbers.Insert(ix, badNumber);
-                        if (!isValidNumberOfDigitsPuzzle(numbers) && !isValidZoniPuzzle(numbers))
-                            return new StageInfo
-                            {
-                                CorrectIndex = ix,
-                                Setup = (m, i) =>
-                                {
-                                    m.setButtonLabel(i, numbers[i].ToString(), size: 92);
-                                    m._puzzleLedColor = 1;
-                                },
-                                Logging = _omitLogging ? null : string.Format("Numbers that are {1} modulo {0}", mod, target)
-                            };
-                    }
-
-                // The numbers all have the same number of dots or dashes in Zoni, except for one.
-                default:
-                    while (true)
-                    {
-                        var useDots = Rnd.Range(0, 2) != 0;
-                        var targetIx = (useDots ? Enumerable.Range(0, _zoniDotNumbers.Count).Where(i => _zoniDotNumbers[i].Count >= 5) : Enumerable.Range(0, _zoniDashNumbers.Count).Where(i => _zoniDashNumbers[i].Count > 5)).PickRandom();
-                        var numbers = (useDots ? _zoniDotNumbers : _zoniDashNumbers)[targetIx].ToArray().Shuffle().Take(5).ToList();
-                        var badTarget = Enumerable.Range(0, (useDots ? _zoniDotNumbers : _zoniDashNumbers).Count).Where(i => i != targetIx && (useDots ? _zoniDotNumbers : _zoniDashNumbers)[i].Count > 0).PickRandom();
-                        var ix = Rnd.Range(0, 6);
-                        numbers.Insert(ix, (useDots ? _zoniDotNumbers : _zoniDashNumbers)[badTarget].PickRandom());
-                        if (!isValidNumberOfDigitsPuzzle(numbers) && !isValidModuloPuzzle(numbers))
-                            return new StageInfo
-                            {
-                                CorrectIndex = ix,
-                                Setup = (m, i) =>
-                                {
-                                    m.setButtonLabel(i, numbers[i].ToString(), size: 92);
-                                    m._puzzleLedColor = 2;
-                                },
-                                Logging = _omitLogging ? null : string.Format("Numbers with {0} {1} in Zoni", targetIx, useDots ? "dots" : "dashes")
-                            };
-                    }
-            }
-        },
+        () => new Func<StageInfo>[] { NumberModuloPuzzle, NumberZoniPuzzle, NumberPrimesPuzzle }.PickRandom()(),
 
         // LETTER PUZZLES
-        () =>
-        {
-            switch (Rnd.Range(0, 6))
-            {
-                // The letters form a sequence of letters equidistant in the alphabet, except for one.
-                case 0:
-                    while (true)
-                    {
-                        var start = Rnd.Range(0, 26);
-                        int step = Rnd.Range(1, 13);
-                        var letters = Enumerable.Range(0, 7).Select(i => (char) ('A' + (start + i * step) % 26)).ToList();
-                        var badLetter = Enumerable.Range(0, 26).Select(i => (char) ('A' + i)).Where(ch => !letters.Contains(ch)).PickRandom();
-                        letters.RemoveAt(6);
-                        letters.RemoveAt(0);
-                        letters.Shuffle();
-                        var ix = Rnd.Range(0, 6);
-                        letters.Insert(ix, badLetter);
-                        if (!isValidRot13Puzzle(letters) && !isValidAtbashPuzzle(letters) && !isValidMorsePuzzle(letters) && !isValidMaritimeFlagsPuzzle(letters).Any() && !isValidSemaphorePuzzle(letters) && !isValidPigpenPuzzle(letters))
-                            return new StageInfo
-                            {
-                                CorrectIndex = ix,
-                                Setup = (m, i) =>
-                                {
-                                    m.setButtonLabel(i, letters[i].ToString());
-                                    m._puzzleLedColor = 1;
-                                },
-                                Logging = _omitLogging ? null : string.Format("Letters {0} away from each other (with wrap around)", step)
-                            };
-                    }
+        () => new Func<StageInfo>[] { LetterDistancePuzzle, LetterAtbashRot13Puzzle, LetterMorsePuzzle, LetterMaritimeFlagPuzzle, LetterSemaphorePuzzle, LetterPigpenPuzzle }.PickRandom()(),
 
-                // The letters are rot13 or atbash of a five-letter English word with one letter inserted. Press the only letter that can be removed to make a common 5-letter word.
-                case 1:
-                    while (true)
-                    {
-                        string oldWord, newWord;
-                        int ix;
-                        generateWordPuzzle(out oldWord, out newWord, out ix);
-                        var atbash = Rnd.Range(0, 2) != 0;
-                        var letters = newWord.Select(ch => (char) ((atbash ? 25 - (ch - 'A') : (ch - 'A' + 13) % 26) + 'A')).ToList();
-                        if (!isValidLetterSequence(letters) && !(atbash ? isValidRot13Puzzle(letters) : isValidAtbashPuzzle(letters)) && !isValidMorsePuzzle(letters) && !isValidMaritimeFlagsPuzzle(letters).Any() && !isValidSemaphorePuzzle(letters) && !isValidPigpenPuzzle(letters))
-                            return new StageInfo
-                            {
-                                CorrectIndex = ix,
-                                Setup = (m, i) =>
-                                {
-                                    m.setButtonLabel(i, letters[i].ToString());
-                                    m._puzzleLedColor = atbash ? 2 : 3;
-                                },
-                                Logging = _omitLogging ? null : string.Format("{0} of {1}", atbash ? "Atbash" : "Rot13", oldWord)
-                            };
-                    }
-
-                // The letters all start with the same two Morse signals, except one.
-                case 2:
-                    while (true)
-                    {
-                        var goodGroupIx = Rnd.Range(0, _morseLetterGroups.Length);
-                        var badLetter = (_morseLetterGroups.Where((g, i) => i != goodGroupIx).Join("") + "ET").PickRandom();
-                        var letters = _morseLetterGroups[goodGroupIx].ToList().Shuffle();
-                        var ix = Rnd.Range(0, 6);
-                        letters.RemoveRange(5, letters.Count - 5);
-                        letters.Insert(ix, badLetter);
-                        if (!isValidLetterSequence(letters) && !isValidRot13Puzzle(letters) && !isValidAtbashPuzzle(letters) && !isValidMaritimeFlagsPuzzle(letters).Any() && !isValidSemaphorePuzzle(letters) && !isValidPigpenPuzzle(letters))
-                            return new StageInfo
-                            {
-                                CorrectIndex = ix,
-                                Setup = (m, i) =>
-                                {
-                                    m.setButtonLabel(i, letters[i].ToString());
-                                    m._puzzleLedColor = 4;
-                                },
-                                Logging = _omitLogging ? null : string.Format("Letters that start with {0} in Morse", "...--.--".Substring(2 * goodGroupIx, 2))
-                            };
-                    }
-
-                // The letters all have red/blue/yellow/white in their maritime flag, except one.
-                case 3:
-                    while (true)
-                    {
-                        var colorGroups = Enumerable.Range(0, 5).Select(c => Enumerable.Range(0, 26).Where(i => _maritimeFlagsLetterColors[i].Contains(c)).Select(i => (char) (i + 'A')).Join("")).ToArray();
-                        var targetColor = Rnd.Range(0, 5);
-                        var groupIx = Enumerable.Range(0, colorGroups.Length).Where(i => colorGroups[i].Length >= 5).PickRandom();
-                        var letters = colorGroups[groupIx].ToList().Shuffle();
-                        var badLetter = Enumerable.Range(0, 26).Select(i => (char) (i + 'A')).Where(ltr => !letters.Contains(ltr)).PickRandom();
-                        var ix = Rnd.Range(0, 6);
-                        letters.RemoveRange(5, letters.Count - 5);
-                        letters.Insert(ix, badLetter);
-
-                        if (!isValidLetterSequence(letters) && !isValidRot13Puzzle(letters) && !isValidAtbashPuzzle(letters) && !isValidMorsePuzzle(letters) && isValidMaritimeFlagsPuzzle(letters).SequenceEqual(new[] { targetColor }) && !isValidSemaphorePuzzle(letters) && !isValidPigpenPuzzle(letters))
-                            return new StageInfo
-                            {
-                                CorrectIndex = ix,
-                                Setup = (m, i) =>
-                                {
-                                    m.setButtonLabel(i, letters[i].ToString());
-                                    m._puzzleLedColor = 5;
-                                },
-                                Logging = _omitLogging ? null : string.Format("Letters that have {0} in their international maritime signalling flag", "white,blue,red,yellow,black".Split(',')[targetColor])
-                            };
-                    }
-
-                // The letters all share a specific semaphore direction, except one.
-                case 4:
-                    while (true)
-                    {
-                        var targetGroupIx = Rnd.Range(0, _semaphoreGroups.Length);
-                        var letters = _semaphoreGroups[targetGroupIx].Items.ToList().Shuffle();
-                        var badLetter = Enumerable.Range(0, 26).Select(i => (char) (i + 'A')).Where(ltr => !letters.Contains(ltr)).PickRandom();
-                        var ix = Rnd.Range(0, 6);
-                        letters.RemoveRange(5, letters.Count - 5);
-                        letters.Insert(ix, badLetter);
-
-                        if (!isValidLetterSequence(letters) && !isValidRot13Puzzle(letters) && !isValidAtbashPuzzle(letters) && !isValidMorsePuzzle(letters) && !isValidMaritimeFlagsPuzzle(letters).Any() && !isValidPigpenPuzzle(letters))
-                            return new StageInfo
-                            {
-                                CorrectIndex = ix,
-                                Setup = (m, i) =>
-                                {
-                                    m.setButtonLabel(i, letters[i].ToString());
-                                    m._puzzleLedColor = 6;
-                                },
-                                Logging = _omitLogging ? null : string.Format("Letters with {0} in their semaphore", _semaphoreGroups[targetGroupIx].Key)
-                            };
-                    }
-
-                // The letters all have or don’t have a dot in Pigpen, except one.
-                default:
-                    while (true)
-                    {
-                        var targetGroupIx = Rnd.Range(0, _pigpenGroups.Length);
-                        var letters = _pigpenGroups[targetGroupIx].ToList().Shuffle();
-                        var badLetter = Enumerable.Range(0, 26).Select(i => (char) (i + 'A')).Where(ltr => !letters.Contains(ltr)).PickRandom();
-                        var ix = Rnd.Range(0, 6);
-                        letters.RemoveRange(5, letters.Count - 5);
-                        letters.Insert(ix, badLetter);
-
-                        if (!isValidLetterSequence(letters) && !isValidRot13Puzzle(letters) && !isValidAtbashPuzzle(letters) && !isValidMorsePuzzle(letters) && !isValidMaritimeFlagsPuzzle(letters).Any() && !isValidSemaphorePuzzle(letters))
-                            return new StageInfo
-                            {
-                                CorrectIndex = ix,
-                                Setup = (m, i) =>
-                                {
-                                    m.setButtonLabel(i, letters[i].ToString());
-                                    m._puzzleLedColor = 7;
-                                },
-                                Logging = _omitLogging ? null : string.Format("Letters that {0} a dot in pigpen cipher", "have,don’t have".Split(',')[targetGroupIx])
-                            };
-                    }
-            }
-        },
-
-        // CHEMICAL ELEMENT SYMBOL PUZZLES
-        () =>
-        {
-            switch (Rnd.Range(0, 2))
-            {
-                // Chemical element symbols, except one that isn’t
-                case 0:
-                {
-                    var goodSymbols = _periodicTable.SelectMany(s => s).Where(sy => sy != "").Concat(_periodicTableExtra).ToList().Shuffle();
-                    string badSymbol;
-                    do { badSymbol = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('a' + Rnd.Range(0, 26)); } while (goodSymbols.Contains(badSymbol));
-                    var ix = Rnd.Range(0, 6);
-                    goodSymbols.RemoveRange(5, goodSymbols.Count - 5);
-                    goodSymbols.Insert(ix, badSymbol);
-                    return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i], size: 64); }, Logging = _omitLogging ? null : string.Format("Chemical element symbols") };
-                }
-
-                // Chemical element symbols from the same row or column in the periodic table
-                default:
-                {
-                    tryAgain:
-                    var isCol = Rnd.Range(0, 2) != 0;
-                    var rowCol = isCol ? new[] { 0, 1, 2, 12, 13, 14, 15, 16, 17 }.PickRandom() : Rnd.Range(0, _periodicTable.Length);
-                    var goodSymbols = (isCol ? Enumerable.Range(0, _periodicTable.Length).Select(row => _periodicTable[row][rowCol]) : _periodicTable[rowCol]).Where(sy => sy != "").ToList();
-                    if (goodSymbols.Count < 5)
-                        goto tryAgain;
-                    var badSymbol = _periodicTable.SelectMany(s => s).Where(sy => sy != "" && !goodSymbols.Contains(sy)).PickRandom();
-                    var ix = Rnd.Range(0, 6);
-                    goodSymbols.RemoveRange(5, goodSymbols.Count - 5);
-                    goodSymbols.Insert(ix, badSymbol);
-                    return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i], size: 64); }, Logging = _omitLogging ? null : string.Format("Chemical elements from {0} {1} of the periodic table", isCol ? "column" : "row", rowCol + 1) };
-                }
-            }
-        },
-
-        // 2-letter codes: USA state abbreviations
-        () =>
-        {
-            var goodAbbrevs = _usStateAbbrevs.ToList().Shuffle();
-            string badAbbrev;
-            do { badAbbrev = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)); } while (goodAbbrevs.Contains(badAbbrev));
-            var ix = Rnd.Range(0, 6);
-            goodAbbrevs.RemoveRange(5, goodAbbrevs.Count - 5);
-            goodAbbrevs.Insert(ix, badAbbrev);
-            return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodAbbrevs[i], size: 64); }, Logging = _omitLogging ? null : string.Format("US state abbreviations") };
-        },
-
-        // 3-LETTER CODES
-        () =>
-        {
-            switch (Rnd.Range(0, 4))
-            {
-                // 3-letter codes: Country ISO codes from “Flags”
-                case 0:
-                    while (true)
-                    {
-                        var goodCodes = _countryCodes.ToList().Shuffle();
-                        string badCode;
-                        do { badCode = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)) + (char) ('A' + Rnd.Range(0, 26)); } while (goodCodes.Contains(badCode));
-                        var ix = Rnd.Range(0, 6);
-                        goodCodes.RemoveRange(5, goodCodes.Count - 5);
-                        goodCodes.Insert(ix, badCode);
-                        if (!isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _companyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
-                            return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("ISO codes of countries in “Flags”") };
-                    }
-
-                // 3-letter codes: Currency ISO codes from both “Flags” and “Foreign Exchange Rates”
-                case 1:
-                    while (true)
-                    {
-                        var goodCodes = _currencyCodes.ToList().Shuffle();
-                        string badCode;
-                        do { badCode = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)) + (char) ('A' + Rnd.Range(0, 26)); } while (goodCodes.Contains(badCode));
-                        var ix = Rnd.Range(0, 6);
-                        goodCodes.RemoveRange(5, goodCodes.Count - 5);
-                        goodCodes.Insert(ix, badCode);
-                        if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _companyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
-                            return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("ISO codes of currencies in “Flags” and “Foreign Exchange Rates”") };
-                    }
-
-                // 3-letter codes: Codes from “Morse War”
-                case 2:
-                    while (true)
-                    {
-                        var goodCodes = _morseWarCodes.ToList().Shuffle();
-                        string badCode;
-                        do { badCode = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)) + (char) ('A' + Rnd.Range(0, 26)); } while (goodCodes.Contains(badCode));
-                        var ix = Rnd.Range(0, 6);
-                        goodCodes.RemoveRange(5, goodCodes.Count - 5);
-                        goodCodes.Insert(ix, badCode);
-                        if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _companyCodes))
-                            return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("Codes from “Morse War”") };
-                    }
-
-                // 3-letter codes: Company codes from “Stock Market”
-                default:
-                    while (true)
-                    {
-                        var goodCodes = _companyCodes.ToList().Shuffle();
-                        string badCode;
-                        do { badCode = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)) + (char) ('A' + Rnd.Range(0, 26)); } while (goodCodes.Contains(badCode));
-                        var ix = Rnd.Range(0, 6);
-                        goodCodes.RemoveRange(5, goodCodes.Count - 5);
-                        goodCodes.Insert(ix, badCode);
-                        if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
-                            return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("Company codes from “Stock Market”") };
-                    }
-            }
-        },
+        // LETTER CODES
+        () => new Func<StageInfo>[] { FakeChemicalElementPuzzle, ChemicalElementRowColumnPuzzle, USStateAbbreviationsPuzzle, CountryISOCodesPuzzle, CurrencyISOCodesPuzzle, MorseWarPuzzle, StockMarketPuzzle }.PickRandom()(),
 
         // ENCODED LETTERS
-        () =>
-        {
-            string puzzle, origWord;
-            int ix;
-            switch (Rnd.Range(0, 2))
-            {
-                case 0: // all same letter except one
-                    var goodLetter = (char) ('A' + Rnd.Range(0, 26));
-                    ix = Rnd.Range(0, 6);
-                    char badLetter;
-                    do { badLetter = (char) ('A' + Rnd.Range(0, 26)); } while (badLetter == goodLetter);
-                    puzzle = new string(goodLetter, ix) + badLetter + new string(goodLetter, 5 - ix);
-                    origWord = new string(goodLetter, 5);
-                    break;
-
-                default:    // 5-letter word
-                    generateWordPuzzle(out origWord, out puzzle, out ix);
-                    break;
-            }
-
-            var encodings = Enumerable.Range(0, 10).ToList().Shuffle();
-            return new StageInfo
-            {
-                CorrectIndex = ix,
-                Logging = _omitLogging ? null : string.Format("{0} (encoded)", origWord),
-                Setup = (m, i) =>
-                {
-                    switch (encodings[i])
-                    {
-                        case 0:
-                            m._showMorse[i] = puzzle[i];
-                            m.ButtonRenderers[i].material.color = m.MorseOnOff[0];
-                            break;
-
-                        case 1:
-                            m.setButtonImage(i, m.MaritimeFlagTextures[puzzle[i] - 'A']);
-                            break;
-
-                        case 2:
-                            m.setSemaphoreFlag(i, puzzle[i], left: true);
-                            m.setSemaphoreFlag(i, puzzle[i], left: false);
-                            break;
-
-                        case 3:
-                            m.setButtonImage(i, m.BrailleTextures[puzzle[i] - 'A']);
-                            m.ButtonImages[2 * i].transform.localScale = new Vector3(.01f, .015f, .0125f);
-                            break;
-
-                        case 4:
-                            m.setButtonLabel(i, puzzle[i].ToString(), m.ZoniFont, m.ZoniFontMaterial, size: 96, z: -0.0025f);
-                            break;
-
-                        case 5:
-                            m.setButtonLabel(i, puzzle[i].ToString(), m.LombaxFont, m.LombaxFontMaterial, size: 100, x: .001f, z: -0.0014f);
-                            break;
-
-                        case 6:
-                            m.setButtonLabel(i, puzzle[i].ToString(), m.SgaFont, m.SgaFontMaterial, size: 128, x: .001f);
-                            break;
-
-                        case 7:
-                            m.setButtonImage(i, m.PigpenTextures[puzzle[i] - 'A']);
-                            break;
-
-                        case 8:
-                            m.setButtonLabel(i, (puzzle[i] - 'A' + 1).ToString(), m.StandardFont, m.StandardFontMaterial, 92);
-                            break;
-
-                        case 9:
-                            m.setButtonLabel(i, Convert.ToString(puzzle[i] - 'A' + 1, 2).PadLeft(5, '0').Insert(2, "\n"), m.StandardFont, m.StandardFontMaterial, 60, z: 0.001f);
-                            break;
-                    }
-                }
-            };
-        },
+        EncodedLettersPuzzle,
 
         // COLORS PUZZLES
-        () =>
-        {
-            switch (Rnd.Range(0, 2))
-            {
-                // 3-TRIT COLORS
-                case 0:
-                {
-                    var powers = new[] { 1, 3, 9 };
-                    var iter = 0;
-                    tryAgain:
-                    iter++;
-                    if (iter > 1000)
-                    {
-                        Debug.LogFormat(@"Too many broken hearts in this world");
-                        throw new Exception();
-                    }
-                    var trit = Rnd.Range(0, 3);
-                    var targetValue = Rnd.Range(0, 3);
-                    var goodColors = Enumerable.Range(0, 27).Where(color => (color / powers[trit]) % 3 == targetValue).ToList().Shuffle();
-                    var badColor = Enumerable.Range(0, 27).Where(color => !goodColors.Contains(color)).PickRandom();
-                    goodColors.RemoveRange(5, goodColors.Count - 5);
-                    var ix = Rnd.Range(0, 6);
-                    goodColors.Insert(ix, badColor);
+        () => new Func<StageInfo>[] { ColorWithNamesPuzzle, ColorsWithNumbersPuzzle }.PickRandom()(),
 
-                    // Make sure that the puzzle isn’t accidentally ambiguous
-                    for (int testTrit = 0; testTrit < 3; testTrit++)
-                        for (int testValue = 0; testValue < 3; testValue++)
-                            if ((testTrit != trit || testValue != targetValue) && goodColors.Count(clr => (clr / powers[testTrit]) % 3 == testValue) == 5)
-                                goto tryAgain;
+        // WORDS/NAMES FROM OTHER MODULES
+        () => new Func<StageInfo>[] { ModuleWordsPuzzle, ModuleNamesPuzzle, GroceryItemsPuzzle, BenedictCumberbatchPuzzle }.PickRandom()(),
 
-                    return new StageInfo
-                    {
-                        CorrectIndex = ix,
-                        Logging = _omitLogging ? null : string.Format("3-trit colors where {0} has value {1}", "blue,green,red".Split(',')[trit], targetValue),
-                        Setup = (m, i) =>
-                        {
-                            m.ButtonRenderers[i].material.color = new Color(((goodColors[i] / 9) % 3) * .5f, ((goodColors[i] / 3) % 3) * .5f, (goodColors[i] % 3) * .5f);
-                            m.setOnHover(i, _colorNames[goodColors[i]]);
-                        }
-                    };
-                }
-
-                // 3-BIT COLORS WITH NUMBERS
-                default:
-                {
-                    var colors = Enumerable.Range(0, 8).ToList().Shuffle();
-                    var ix = Rnd.Range(0, 6);
-                    var offset = Rnd.Range(11, 93);
-
-                    return new StageInfo
-                    {
-                        CorrectIndex = ix,
-                        Logging = _omitLogging ? null : string.Format("Numbered colors with offset {0}", offset),
-                        Setup = (m, i) =>
-                        {
-                            m.ButtonRenderers[i].material.color = new Color(colors[i] / 4, (colors[i] / 2) % 2, colors[i] % 2);
-                            var number = colors[(i == ix) ? 6 : i];
-                            m.setButtonLabel(i, (number + offset).ToString(), m.StandardFont, m.StandardFontMaterial, 92, white: colors[i] == 0);
-                        }
-                    };
-                }
-            }
-        },
-
-        // COUNTRY FLAGS
-        () =>
-        {
-            tryAgain:
-            var groupSet = _countryNameGroups.PickRandom();
-            var goodGroup = groupSet.Where(g => g.Items.Length >= 5).PickRandom();
-            var badCountry = groupSet.Where(gr => gr != goodGroup).SelectMany(gr => gr.Items).PickRandom();
-            var goodCountries = goodGroup.Items.ToList().Shuffle();
-            var ix = Rnd.Range(0, 6);
-            goodCountries.RemoveRange(5, goodCountries.Count - 5);
-            goodCountries.Insert(ix, badCountry);
-
-            // Make sure the puzzle is not accidentally ambiguous
-            foreach (var otherGroupSet in _countryNameGroups)
-                if (otherGroupSet != groupSet && otherGroupSet.Any(gr => goodCountries.Count(cn => gr.Items.Contains(cn)) == 5))
-                    goto tryAgain;
-
-            return new StageInfo
-            {
-                CorrectIndex = ix,
-                Setup = (m, i) => { m.setCountryFlag(i, goodCountries[i]); },
-                Logging = _omitLogging ? null : goodGroup.Logging
-            };
-        },
-
-        // WORDS/NAMES
-        () =>
-        {
-            switch (Rnd.Range(0, 4))
-            {
-                // Words from specific modules
-                case 0:
-                    return generateItemizedPuzzle(_words, "Words from {0}", _wordsModules);
-
-                // Names from specific modules
-                case 1:
-                    return generateItemizedPuzzle(_names, "Names from {0}", _namesModules);
-
-                // Grocery items
-                case 2:
-                    return generateItemizedPuzzle(_groceryItems, "Grocery items from {0}", _groceryModules);
-
-                // Benedict Cumberbatch
-                default:
-                    var w = _benedictHeadings.Length;
-                    var coords = Enumerable.Range(0, w * _benedictTable.Length).ToList().Shuffle().Take(6).ToList();
-                    var ix = Rnd.Range(0, 6);
-                    var badHeading = Enumerable.Range(0, w).Where(i => i != coords[ix] % w).PickRandom();
-                    return new StageInfo
-                    {
-                        CorrectIndex = ix,
-                        Setup = (m, i) => { m.setOnHover(i, _benedictHeadings[i == ix ? badHeading : coords[i] % w] + _benedictTable[coords[i] / w][coords[i] % w], 0.001f); },
-                        Logging = _omitLogging ? null : "Names from Benedict Cumberbatch"
-                    };
-            }
-        },
+        // MORE WORDS/NAMES
+        () => new Func<StageInfo>[] { MusicNotesPuzzle, LondonUndergroundPuzzle, SimonSpeaksWordsPuzzle, IkeaPuzzle, LionsSharePuzzle, DrDoctorPuzzle }.PickRandom()(),
 
         // SYMBOLS/GRAPHICS
-        () =>
+        () => new Func<StageInfo>[] { CountryFlagsPuzzle, FriendshipSymbolsPuzzle, ZooAnimalsPuzzle, ThreeDTunnelsSymbolsPuzzle, QuestionMarkSymbolsPuzzle }.PickRandom()()
+    );
+
+    #region Puzzles
+    private static StageInfo NumberModuloPuzzle()
+    {
+        while (true)
         {
-            switch (Rnd.Range(0, 4))
+            var mod = _modNumbers.PickRandom();
+            var target = Rnd.Range(0, mod);
+            var numbers = Enumerable.Range(0, int.MaxValue).Select(_ => Rnd.Range(0, 100 / mod) * mod + target).Distinct().Take(5).ToList();
+            var badNumber = Rnd.Range(0, (100 - mod) / mod) * mod + target + 1 + Rnd.Range(0, mod - 1);
+            var ix = Rnd.Range(0, 6);
+            numbers.Insert(ix, badNumber);
+            if (!isValidNumberOfDigitsPuzzle(numbers) && !isValidZoniPuzzle(numbers))
+                return new StageInfo
+                {
+                    CorrectIndex = ix,
+                    Setup = (m, i) =>
+                    {
+                        m.setButtonLabel(i, numbers[i].ToString(), size: 92);
+                        m._puzzleLedColor = 1;
+                    },
+                    Logging = _omitLogging ? null : string.Format("Numbers that are {1} modulo {0}", mod, target)
+                };
+        }
+    }
+    private static StageInfo NumberZoniPuzzle()
+    {
+        while (true)
+        {
+            var useDots = Rnd.Range(0, 2) != 0;
+            var targetIx = (useDots ? Enumerable.Range(0, _zoniDotNumbers.Count).Where(i => _zoniDotNumbers[i].Count >= 5) : Enumerable.Range(0, _zoniDashNumbers.Count).Where(i => _zoniDashNumbers[i].Count > 5)).PickRandom();
+            var numbers = (useDots ? _zoniDotNumbers : _zoniDashNumbers)[targetIx].ToArray().Shuffle().Take(5).ToList();
+            var badTarget = Enumerable.Range(0, (useDots ? _zoniDotNumbers : _zoniDashNumbers).Count).Where(i => i != targetIx && (useDots ? _zoniDotNumbers : _zoniDashNumbers)[i].Count > 0).PickRandom();
+            var ix = Rnd.Range(0, 6);
+            numbers.Insert(ix, (useDots ? _zoniDotNumbers : _zoniDashNumbers)[badTarget].PickRandom());
+            if (!isValidNumberOfDigitsPuzzle(numbers) && !isValidModuloPuzzle(numbers))
+                return new StageInfo
+                {
+                    CorrectIndex = ix,
+                    Setup = (m, i) =>
+                    {
+                        m.setButtonLabel(i, numbers[i].ToString(), size: 92);
+                        m._puzzleLedColor = 2;
+                    },
+                    Logging = string.Format("Numbers with {0} {1} in Zoni", targetIx, useDots ? "dots" : "dashes")
+                };
+        }
+    }
+    private static StageInfo NumberPrimesPuzzle()
+    {
+        var usePrimes = Rnd.Range(0, 2) != 0;
+        var goodNumbers = (usePrimes ? _primes : Enumerable.Range(2, 98).Except(_primes)).ToList().Shuffle();
+        var badNumber = (usePrimes ? Enumerable.Range(2, 98).Except(_primes) : _primes).PickRandom();
+        var ix = Rnd.Range(0, 6);
+        goodNumbers.RemoveRange(5, goodNumbers.Count - 5);
+        goodNumbers.Insert(ix, badNumber);
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Logging = usePrimes ? "Prime numbers" : "Composite numbers",
+            Setup = (m, i) =>
             {
-                // Music notes: first five notes of a major scale
-                case 0:
+                m.setButtonLabel(i, goodNumbers[i].ToString(), size: 92);
+                m._puzzleLedColor = 3;
+            }
+        };
+    }
+    private static StageInfo LetterDistancePuzzle()
+    {
+        // The letters form a sequence of letters equidistant in the alphabet, except for one.
+        while (true)
+        {
+            var start = Rnd.Range(0, 26);
+            int step = Rnd.Range(1, 13);
+            var letters = Enumerable.Range(0, 7).Select(i => (char) ('A' + (start + i * step) % 26)).ToList();
+            var badLetter = Enumerable.Range(0, 26).Select(i => (char) ('A' + i)).Where(ch => !letters.Contains(ch)).PickRandom();
+            letters.RemoveAt(6);
+            letters.RemoveAt(0);
+            letters.Shuffle();
+            var ix = Rnd.Range(0, 6);
+            letters.Insert(ix, badLetter);
+            if (!isValidRot13Puzzle(letters) && !isValidAtbashPuzzle(letters) && !isValidMorsePuzzle(letters) && !isValidMaritimeFlagsPuzzle(letters).Any() && !isValidSemaphorePuzzle(letters) && !isValidPigpenPuzzle(letters))
+                return new StageInfo
                 {
-                    var offset = Rnd.Range(0, 12);
-                    var majorScale = new[] { 0, 2, 4, 5, 7 }.Select(n => (n + offset) % 12).ToList().Shuffle();
-                    var badNote = Enumerable.Range(0, 12).Where(n => n != (9 + offset) % 12 && n != (11 + offset) % 12 && !majorScale.Contains(n)).PickRandom();
-                    var ix = Rnd.Range(0, 6);
-                    majorScale.Insert(ix, badNote);
-                    var noteNames = majorScale.Select(note => _noteNames[note].PickRandom()).ToArray();
-                    return new StageInfo
+                    CorrectIndex = ix,
+                    Setup = (m, i) =>
                     {
-                        CorrectIndex = ix,
-                        Setup = (m, i) => { m.setButtonLabel(i, noteNames[i], m.MusicFont, m.MusicFontMaterial, 92); },
-                        Logging = _omitLogging ? null : string.Format("First five notes of the {0} major scale", _noteNames[offset])
-                    };
-                }
-
-                // Zoo animals
-                case 1:
+                        m.setButtonLabel(i, letters[i].ToString());
+                        m._puzzleLedColor = 1;
+                    },
+                    Logging = _omitLogging ? null : string.Format("Letters {0} away from each other (with wrap around)", step)
+                };
+        }
+    }
+    private static StageInfo LetterAtbashRot13Puzzle()
+    {
+        // The letters are ROT13 or Atbash of a five-letter English word with one letter inserted. Press the only letter that can be removed to make a common 5-letter word.
+        while (true)
+        {
+            string oldWord, newWord;
+            int ix;
+            generateWordPuzzle(out oldWord, out newWord, out ix);
+            var atbash = Rnd.Range(0, 2) != 0;
+            var letters = newWord.Select(ch => (char) ((atbash ? 25 - (ch - 'A') : (ch - 'A' + 13) % 26) + 'A')).ToList();
+            if (!isValidLetterSequence(letters) && !(atbash ? isValidRot13Puzzle(letters) : isValidAtbashPuzzle(letters)) && !isValidMorsePuzzle(letters) && !isValidMaritimeFlagsPuzzle(letters).Any() && !isValidSemaphorePuzzle(letters) && !isValidPigpenPuzzle(letters))
+                return new StageInfo
                 {
-                    var inf = Hex.LargeHexagon(5)
-                        .SelectMany(hex => Enumerable.Range(0, 6).Select(direction =>
-                            ((hex + 5 * Hex.GetDirection(direction)).Distance >= 5)
-                                ? null
-                                : new { StartHex = hex, Direction = direction, Line = Enumerable.Range(0, 5).Select(dist => hex + dist * Hex.GetDirection(direction)).ToArray() }))
-                        .Where(h => h != null)
-                        .PickRandom();
-
-                    var goodAnimals = inf.Line.Select(hex => _zooAnimals[hex]).ToList().Shuffle();
-                    var ix = Rnd.Range(0, 6);
-                    goodAnimals.Insert(ix, _zooAnimals.Where(kvp => kvp.Key != inf.StartHex + 6 * Hex.GetDirection(inf.Direction) && kvp.Key != inf.StartHex - Hex.GetDirection(inf.Direction) && !inf.Line.Contains(kvp.Key)).PickRandom().Value);
-                    return new StageInfo
+                    CorrectIndex = ix,
+                    Setup = (m, i) =>
                     {
-                        CorrectIndex = ix,
-                        Logging = _omitLogging ? null : string.Format("Line of Zoo animals from {0} going {1}", _zooAnimals[inf.StartHex], "NW,N,NE,SE,S,SW".Split(',')[inf.Direction]),
-                        Setup = (m, i) => { m.setButtonImage(i, goodAnimals[i], m.ZooAnimalTextures, .015f); }
-                    };
-                }
-
-                // 3D Tunnels symbols
-                case 2:
+                        m.setButtonLabel(i, letters[i].ToString());
+                        m._puzzleLedColor = atbash ? 2 : 3;
+                    },
+                    Logging = _omitLogging ? null : string.Format("{0} of {1}", atbash ? "Atbash" : "Rot13", oldWord)
+                };
+        }
+    }
+    private static StageInfo LetterMorsePuzzle()
+    {
+        // The letters all start with the same two signs (dots/dashes) in Morse
+        while (true)
+        {
+            var goodGroupIx = Rnd.Range(0, _morseLetterGroups.Length);
+            var badLetter = (_morseLetterGroups.Where((g, i) => i != goodGroupIx).Join("") + "ET").PickRandom();
+            var letters = _morseLetterGroups[goodGroupIx].ToList().Shuffle();
+            var ix = Rnd.Range(0, 6);
+            letters.RemoveRange(5, letters.Count - 5);
+            letters.Insert(ix, badLetter);
+            if (!isValidLetterSequence(letters) && !isValidRot13Puzzle(letters) && !isValidAtbashPuzzle(letters) && !isValidMaritimeFlagsPuzzle(letters).Any() && !isValidSemaphorePuzzle(letters) && !isValidPigpenPuzzle(letters))
+                return new StageInfo
                 {
-                    var dimIx = Rnd.Range(0, 3);
-                    var dim = new[] { 1, 3, 9 }[dimIx];
-                    var val = Rnd.Range(0, 3);
-                    var goodSymbols = Enumerable.Range(0, 27).Where(i => (i / dim) % 3 == val).ToList().Shuffle().Take(5).ToList();
-                    var badSymbol = Enumerable.Range(0, 27).Where(i => (i / dim) % 3 != val).PickRandom();
-                    var ix = Rnd.Range(0, 6);
-                    goodSymbols.Insert(ix, badSymbol);
-                    return new StageInfo
+                    CorrectIndex = ix,
+                    Setup = (m, i) =>
                     {
-                        CorrectIndex = ix,
-                        Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i] == 26 ? "." : ((char) ('a' + goodSymbols[i])).ToString(), m.TunnelFont, m.TunnelFontMaterial, size: 104, z: .0004f); },
-                        Logging = _omitLogging ? null : string.Format("3D Tunnels symbols where {0} is {1}", "XYZ"[dimIx], val)
-                    };
-                }
+                        m.setButtonLabel(i, letters[i].ToString());
+                        m._puzzleLedColor = 4;
+                    },
+                    Logging = _omitLogging ? null : string.Format("Letters that start with {0} in Morse", "...--.--".Substring(2 * goodGroupIx, 2))
+                };
+        }
+    }
+    private static StageInfo LetterMaritimeFlagPuzzle()
+    {
+        // The letters all have red/blue/yellow/white in their maritime flag, except one.
+        while (true)
+        {
+            var colorGroups = Enumerable.Range(0, 5).Select(c => Enumerable.Range(0, 26).Where(i => _maritimeFlagsLetterColors[i].Contains(c)).Select(i => (char) (i + 'A')).Join("")).ToArray();
+            var targetColor = Rnd.Range(0, 5);
+            var groupIx = Enumerable.Range(0, colorGroups.Length).Where(i => colorGroups[i].Length >= 5).PickRandom();
+            var letters = colorGroups[groupIx].ToList().Shuffle();
+            var badLetter = Enumerable.Range(0, 26).Select(i => (char) (i + 'A')).Where(ltr => !letters.Contains(ltr)).PickRandom();
+            var ix = Rnd.Range(0, 6);
+            letters.RemoveRange(5, letters.Count - 5);
+            letters.Insert(ix, badLetter);
 
-                // Question Mark symbols
-                default:
+            if (!isValidLetterSequence(letters) && !isValidRot13Puzzle(letters) && !isValidAtbashPuzzle(letters) && !isValidMorsePuzzle(letters) && isValidMaritimeFlagsPuzzle(letters).SequenceEqual(new[] { targetColor }) && !isValidSemaphorePuzzle(letters) && !isValidPigpenPuzzle(letters))
+                return new StageInfo
                 {
-                    var goodRow = Rnd.Range(0, 3);
-                    int badRow;
-                    do { badRow = Rnd.Range(0, 3); } while (badRow == goodRow);
-                    var row = Enumerable.Range(0, 5).Select(i => (goodRow + 1) + "-" + (i + 1)).ToList().Shuffle();
-                    var ix = Rnd.Range(0, 6);
-                    row.Insert(ix, (badRow + 1) + "-" + Rnd.Range(1, 6));
-                    return new StageInfo
+                    CorrectIndex = ix,
+                    Setup = (m, i) =>
                     {
-                        CorrectIndex = ix,
-                        Setup = (m, i) => { m.setButtonImage(i, row[i], m.QuestionMarkTextures); },
-                        Logging = _omitLogging ? null : string.Format("Symbols from row {0} in Question Mark", goodRow + 1)
-                    };
+                        m.setButtonLabel(i, letters[i].ToString());
+                        m._puzzleLedColor = 5;
+                    },
+                    Logging = _omitLogging ? null : string.Format("Letters that have {0} in their international maritime signalling flag", "white,blue,red,yellow,black".Split(',')[targetColor])
+                };
+        }
+    }
+    private static StageInfo LetterSemaphorePuzzle()
+    {
+        // The letters all share a specific semaphore direction, except one.
+        while (true)
+        {
+            var targetGroupIx = Rnd.Range(0, _semaphoreGroups.Length);
+            var letters = _semaphoreGroups[targetGroupIx].Items.ToList().Shuffle();
+            var badLetter = Enumerable.Range(0, 26).Select(i => (char) (i + 'A')).Where(ltr => !letters.Contains(ltr)).PickRandom();
+            var ix = Rnd.Range(0, 6);
+            letters.RemoveRange(5, letters.Count - 5);
+            letters.Insert(ix, badLetter);
+
+            if (!isValidLetterSequence(letters) && !isValidRot13Puzzle(letters) && !isValidAtbashPuzzle(letters) && !isValidMorsePuzzle(letters) && !isValidMaritimeFlagsPuzzle(letters).Any() && !isValidPigpenPuzzle(letters))
+                return new StageInfo
+                {
+                    CorrectIndex = ix,
+                    Setup = (m, i) =>
+                    {
+                        m.setButtonLabel(i, letters[i].ToString());
+                        m._puzzleLedColor = 6;
+                    },
+                    Logging = _omitLogging ? null : string.Format("Letters with {0} in their semaphore", _semaphoreGroups[targetGroupIx].Key)
+                };
+        }
+    }
+    private static StageInfo LetterPigpenPuzzle()
+    {
+        while (true)
+        {
+            var targetGroupIx = Rnd.Range(0, _pigpenGroups.Length);
+            var letters = _pigpenGroups[targetGroupIx].ToList().Shuffle();
+            var badLetter = Enumerable.Range(0, 26).Select(i => (char) (i + 'A')).Where(ltr => !letters.Contains(ltr)).PickRandom();
+            var ix = Rnd.Range(0, 6);
+            letters.RemoveRange(5, letters.Count - 5);
+            letters.Insert(ix, badLetter);
+
+            if (!isValidLetterSequence(letters) && !isValidRot13Puzzle(letters) && !isValidAtbashPuzzle(letters) && !isValidMorsePuzzle(letters) && !isValidMaritimeFlagsPuzzle(letters).Any() && !isValidSemaphorePuzzle(letters))
+                return new StageInfo
+                {
+                    CorrectIndex = ix,
+                    Setup = (m, i) =>
+                    {
+                        m.setButtonLabel(i, letters[i].ToString());
+                        m._puzzleLedColor = 7;
+                    },
+                    Logging = _omitLogging ? null : string.Format("Letters that {0} a dot in pigpen cipher", "have,don’t have".Split(',')[targetGroupIx])
+                };
+        }
+    }
+    private static StageInfo FakeChemicalElementPuzzle()
+    {
+        var goodSymbols = _periodicTable.SelectMany(s => s).Where(sy => sy != "").Concat(_periodicTableExtra).ToList().Shuffle();
+        string badSymbol;
+        do { badSymbol = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('a' + Rnd.Range(0, 26)); } while (goodSymbols.Contains(badSymbol));
+        var ix = Rnd.Range(0, 6);
+        goodSymbols.RemoveRange(5, goodSymbols.Count - 5);
+        goodSymbols.Insert(ix, badSymbol);
+        return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i], size: 64); }, Logging = _omitLogging ? null : string.Format("Chemical element symbols") };
+    }
+    private static StageInfo ChemicalElementRowColumnPuzzle()
+    {
+        tryAgain:
+        var isCol = Rnd.Range(0, 2) != 0;
+        var rowCol = isCol ? new[] { 0, 1, 2, 12, 13, 14, 15, 16, 17 }.PickRandom() : Rnd.Range(0, _periodicTable.Length);
+        var goodSymbols = (isCol ? Enumerable.Range(0, _periodicTable.Length).Select(row => _periodicTable[row][rowCol]) : _periodicTable[rowCol]).Where(sy => sy != "").ToList();
+        if (goodSymbols.Count < 5)
+            goto tryAgain;
+        var badSymbol = _periodicTable.SelectMany(s => s).Where(sy => sy != "" && !goodSymbols.Contains(sy)).PickRandom();
+        var ix = Rnd.Range(0, 6);
+        goodSymbols.RemoveRange(5, goodSymbols.Count - 5);
+        goodSymbols.Insert(ix, badSymbol);
+        return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i], size: 64); }, Logging = _omitLogging ? null : string.Format("Chemical elements from {0} {1} of the periodic table", isCol ? "column" : "row", rowCol + 1) };
+    }
+    private static StageInfo USStateAbbreviationsPuzzle()
+    {
+        var goodAbbrevs = _usStateAbbrevs.ToList().Shuffle();
+        string badAbbrev;
+        do { badAbbrev = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)); } while (goodAbbrevs.Contains(badAbbrev));
+        var ix = Rnd.Range(0, 6);
+        goodAbbrevs.RemoveRange(5, goodAbbrevs.Count - 5);
+        goodAbbrevs.Insert(ix, badAbbrev);
+        return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodAbbrevs[i], size: 64); }, Logging = _omitLogging ? null : string.Format("US state abbreviations") };
+    }
+    private static StageInfo CountryISOCodesPuzzle()
+    {
+        while (true)
+        {
+            var goodCodes = _countryCodes.ToList().Shuffle();
+            string badCode;
+            do { badCode = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)) + (char) ('A' + Rnd.Range(0, 26)); } while (goodCodes.Contains(badCode));
+            var ix = Rnd.Range(0, 6);
+            goodCodes.RemoveRange(5, goodCodes.Count - 5);
+            goodCodes.Insert(ix, badCode);
+            if (!isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _companyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
+                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("ISO codes of countries in “Flags”") };
+        }
+    }
+    private static StageInfo CurrencyISOCodesPuzzle()
+    {
+        while (true)
+        {
+            var goodCodes = _currencyCodes.ToList().Shuffle();
+            string badCode;
+            do { badCode = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)) + (char) ('A' + Rnd.Range(0, 26)); } while (goodCodes.Contains(badCode));
+            var ix = Rnd.Range(0, 6);
+            goodCodes.RemoveRange(5, goodCodes.Count - 5);
+            goodCodes.Insert(ix, badCode);
+            if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _companyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
+                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("ISO codes of currencies in “Flags” and “Foreign Exchange Rates”") };
+        }
+    }
+    private static StageInfo MorseWarPuzzle()
+    {
+        while (true)
+        {
+            var goodCodes = _morseWarCodes.ToList().Shuffle();
+            string badCode;
+            do { badCode = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)) + (char) ('A' + Rnd.Range(0, 26)); } while (goodCodes.Contains(badCode));
+            var ix = Rnd.Range(0, 6);
+            goodCodes.RemoveRange(5, goodCodes.Count - 5);
+            goodCodes.Insert(ix, badCode);
+            if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _companyCodes))
+                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("Codes from “Morse War”") };
+        }
+    }
+    private static StageInfo StockMarketPuzzle()
+    {
+        while (true)
+        {
+            var goodCodes = _companyCodes.ToList().Shuffle();
+            string badCode;
+            do { badCode = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)) + (char) ('A' + Rnd.Range(0, 26)); } while (goodCodes.Contains(badCode));
+            var ix = Rnd.Range(0, 6);
+            goodCodes.RemoveRange(5, goodCodes.Count - 5);
+            goodCodes.Insert(ix, badCode);
+            if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
+                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("Company codes from “Stock Market”") };
+        }
+    }
+    private static StageInfo EncodedLettersPuzzle()
+    {
+        string puzzle, origWord;
+        int ix;
+        switch (Rnd.Range(0, 2))
+        {
+            case 0: // all same letter except one
+                var goodLetter = (char) ('A' + Rnd.Range(0, 26));
+                ix = Rnd.Range(0, 6);
+                char badLetter;
+                do { badLetter = (char) ('A' + Rnd.Range(0, 26)); } while (badLetter == goodLetter);
+                puzzle = new string(goodLetter, ix) + badLetter + new string(goodLetter, 5 - ix);
+                origWord = new string(goodLetter, 5);
+                break;
+
+            default:    // 5-letter word
+                generateWordPuzzle(out origWord, out puzzle, out ix);
+                break;
+        }
+
+        var encodings = Enumerable.Range(0, 10).ToList().Shuffle();
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Logging = _omitLogging ? null : string.Format("{0} (encoded)", origWord),
+            Setup = (m, i) =>
+            {
+                switch (encodings[i])
+                {
+                    case 0:
+                        m._showMorse[i] = puzzle[i];
+                        m.ButtonRenderers[i].material.color = m.MorseOnOff[0];
+                        break;
+
+                    case 1:
+                        m.setButtonImage(i, m.MaritimeFlagTextures[puzzle[i] - 'A']);
+                        break;
+
+                    case 2:
+                        m.setSemaphoreFlag(i, puzzle[i], left: true);
+                        m.setSemaphoreFlag(i, puzzle[i], left: false);
+                        break;
+
+                    case 3:
+                        m.setButtonImage(i, m.BrailleTextures[puzzle[i] - 'A']);
+                        m.ButtonImages[2 * i].transform.localScale = new Vector3(.01f, .015f, .0125f);
+                        break;
+
+                    case 4:
+                        m.setButtonLabel(i, puzzle[i].ToString(), m.ZoniFont, m.ZoniFontMaterial, size: 96, z: -0.0025f);
+                        break;
+
+                    case 5:
+                        m.setButtonLabel(i, puzzle[i].ToString(), m.LombaxFont, m.LombaxFontMaterial, size: 100, x: .001f, z: -0.0014f);
+                        break;
+
+                    case 6:
+                        m.setButtonLabel(i, puzzle[i].ToString(), m.SgaFont, m.SgaFontMaterial, size: 128, x: .001f);
+                        break;
+
+                    case 7:
+                        m.setButtonImage(i, m.PigpenTextures[puzzle[i] - 'A']);
+                        break;
+
+                    case 8:
+                        m.setButtonLabel(i, (puzzle[i] - 'A' + 1).ToString(), m.StandardFont, m.StandardFontMaterial, 92);
+                        break;
+
+                    case 9:
+                        m.setButtonLabel(i, Convert.ToString(puzzle[i] - 'A' + 1, 2).PadLeft(5, '0').Insert(2, "\n"), m.StandardFont, m.StandardFontMaterial, 60, z: 0.001f);
+                        break;
                 }
             }
-        }
-    );
+        };
+    }
+    private static StageInfo ColorWithNamesPuzzle()
+    {
+        var powers = new[] { 1, 3, 9 };
+        tryAgain:
+        var trit = Rnd.Range(0, 3);
+        var targetValue = Rnd.Range(0, 3);
+        var goodColors = Enumerable.Range(0, 27).Where(color => (color / powers[trit]) % 3 == targetValue).ToList().Shuffle();
+        var badColor = Enumerable.Range(0, 27).Where(color => !goodColors.Contains(color)).PickRandom();
+        goodColors.RemoveRange(5, goodColors.Count - 5);
+        var ix = Rnd.Range(0, 6);
+        goodColors.Insert(ix, badColor);
+
+        // Make sure that the puzzle isn’t accidentally ambiguous
+        for (int testTrit = 0; testTrit < 3; testTrit++)
+            for (int testValue = 0; testValue < 3; testValue++)
+                if ((testTrit != trit || testValue != targetValue) && goodColors.Count(clr => (clr / powers[testTrit]) % 3 == testValue) == 5)
+                    goto tryAgain;
+
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Logging = _omitLogging ? null : string.Format("Named colors where {0} has value {1}", "blue,green,red".Split(',')[trit], targetValue),
+            Setup = (m, i) =>
+            {
+                m.ButtonRenderers[i].material.color = new Color(((goodColors[i] / 9) % 3) * .5f, ((goodColors[i] / 3) % 3) * .5f, (goodColors[i] % 3) * .5f);
+                m.setOnHover(i, _colorNames[goodColors[i]]);
+            }
+        };
+    }
+    private static StageInfo ColorsWithNumbersPuzzle()
+    {
+        var colors = Enumerable.Range(0, 8).ToList().Shuffle();
+        var ix = Rnd.Range(0, 6);
+        var offset = Rnd.Range(11, 93);
+
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Logging = _omitLogging ? null : string.Format("Numbered colors with offset {0}", offset),
+            Setup = (m, i) =>
+            {
+                m.ButtonRenderers[i].material.color = new Color(colors[i] / 4, (colors[i] / 2) % 2, colors[i] % 2);
+                var number = colors[(i == ix) ? 6 : i];
+                m.setButtonLabel(i, (number + offset).ToString(), m.StandardFont, m.StandardFontMaterial, 92, white: colors[i] == 0);
+            }
+        };
+    }
+    private static StageInfo ModuleWordsPuzzle()
+    {
+        return generateItemizedPuzzle(_words, "Words from {0}", _wordsModules);
+    }
+    private static StageInfo ModuleNamesPuzzle()
+    {
+        return generateItemizedPuzzle(_names, "Names from {0}", _namesModules);
+    }
+    private static StageInfo GroceryItemsPuzzle()
+    {
+        return generateItemizedPuzzle(_groceryItems, "Grocery items from {0}", _groceryModules);
+    }
+    private static StageInfo BenedictCumberbatchPuzzle()
+    {
+        var w = _benedictHeadings.Length;
+        var coords = Enumerable.Range(0, w * _benedictTable.Length).ToList().Shuffle().Take(6).ToList();
+        var ix = Rnd.Range(0, 6);
+        var badHeading = Enumerable.Range(0, w).Where(i => i != coords[ix] % w).PickRandom();
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setOnHover(i, _benedictHeadings[i == ix ? badHeading : coords[i] % w] + _benedictTable[coords[i] / w][coords[i] % w]); },
+            Logging = _omitLogging ? null : "Names from Benedict Cumberbatch"
+        };
+    }
+    private static StageInfo FriendshipSymbolsPuzzle()
+    {
+        // This code is the same as generateItemizedPuzzle() except that it uses textures instead of text
+        var goodRowIx = Rnd.Range(0, _friendshipSymbolGroups.Length);
+        var goodFriendshipSymbols = _friendshipSymbolGroups[goodRowIx].ToList().Shuffle();
+        goodFriendshipSymbols.RemoveRange(5, goodFriendshipSymbols.Count - 5);
+        var badFriendshipSymbol = Enumerable.Range(0, _friendshipSymbolGroups.Length).Where(i => i != goodRowIx).SelectMany(i => _friendshipSymbolGroups[i]).PickRandom();
+        var ix = Rnd.Range(0, 6);
+        goodFriendshipSymbols.Insert(ix, badFriendshipSymbol);
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setButtonImage(i, goodFriendshipSymbols[i], m.FriendshipSymbols, size: .015f); },
+            Logging = _omitLogging ? null : string.Format("Symbols from the {0} in Friendship", _friendshipSymbolGroupNames[goodRowIx])
+        };
+    }
+    private static StageInfo ZooAnimalsPuzzle()
+    {
+        var inf = Hex.LargeHexagon(5)
+            .SelectMany(hex => Enumerable.Range(0, 6).Select(direction =>
+                ((hex + 5 * Hex.GetDirection(direction)).Distance >= 5)
+                    ? null
+                    : new { StartHex = hex, Direction = direction, Line = Enumerable.Range(0, 5).Select(dist => hex + dist * Hex.GetDirection(direction)).ToArray() }))
+            .Where(h => h != null)
+            .PickRandom();
+
+        var goodAnimals = inf.Line.Select(hex => _zooAnimals[hex]).ToList().Shuffle();
+        var ix = Rnd.Range(0, 6);
+        goodAnimals.Insert(ix, _zooAnimals.Where(kvp => kvp.Key != inf.StartHex + 6 * Hex.GetDirection(inf.Direction) && kvp.Key != inf.StartHex - Hex.GetDirection(inf.Direction) && !inf.Line.Contains(kvp.Key)).PickRandom().Value);
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Logging = _omitLogging ? null : string.Format("Line of Zoo animals from {0} going {1}", _zooAnimals[inf.StartHex], "NW,N,NE,SE,S,SW".Split(',')[inf.Direction]),
+            Setup = (m, i) => { m.setButtonImage(i, goodAnimals[i], m.ZooAnimalTextures, .015f); }
+        };
+    }
+    private static StageInfo ThreeDTunnelsSymbolsPuzzle()
+    {
+        var dimIx = Rnd.Range(0, 3);
+        var dim = new[] { 1, 3, 9 }[dimIx];
+        var val = Rnd.Range(0, 3);
+        var goodSymbols = Enumerable.Range(0, 27).Where(i => (i / dim) % 3 == val).ToList().Shuffle().Take(5).ToList();
+        var badSymbol = Enumerable.Range(0, 27).Where(i => (i / dim) % 3 != val).PickRandom();
+        var ix = Rnd.Range(0, 6);
+        goodSymbols.Insert(ix, badSymbol);
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i] == 26 ? "." : ((char) ('a' + goodSymbols[i])).ToString(), m.TunnelFont, m.TunnelFontMaterial, size: 104, z: .0004f); },
+            Logging = _omitLogging ? null : string.Format("3D Tunnels symbols where {0} is {1}", "XYZ"[dimIx], val)
+        };
+    }
+    private static StageInfo QuestionMarkSymbolsPuzzle()
+    {
+        var goodRow = Rnd.Range(0, 3);
+        int badRow;
+        do { badRow = Rnd.Range(0, 3); } while (badRow == goodRow);
+        var row = Enumerable.Range(0, 5).Select(i => (goodRow + 1) + "-" + (i + 1)).ToList().Shuffle();
+        var ix = Rnd.Range(0, 6);
+        row.Insert(ix, (badRow + 1) + "-" + Rnd.Range(1, 6));
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setButtonImage(i, row[i], m.QuestionMarkTextures); },
+            Logging = _omitLogging ? null : string.Format("Symbols from row {0} in Question Mark", goodRow + 1)
+        };
+    }
+    private static StageInfo CountryFlagsPuzzle()
+    {
+        tryAgain:
+        var groupSet = _countryNameGroups.PickRandom();
+        var goodGroup = groupSet.Where(g => g.Items.Length >= 5).PickRandom();
+        var badCountry = groupSet.Where(gr => gr != goodGroup).SelectMany(gr => gr.Items).PickRandom();
+        var goodCountries = goodGroup.Items.ToList().Shuffle();
+        var ix = Rnd.Range(0, 6);
+        goodCountries.RemoveRange(5, goodCountries.Count - 5);
+        goodCountries.Insert(ix, badCountry);
+
+        // Make sure the puzzle is not accidentally ambiguous
+        foreach (var otherGroupSet in _countryNameGroups)
+            if (otherGroupSet != groupSet && otherGroupSet.Any(gr => goodCountries.Count(cn => gr.Items.Contains(cn)) == 5))
+                goto tryAgain;
+
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setCountryFlag(i, goodCountries[i]); },
+            Logging = _omitLogging ? null : goodGroup.Logging
+        };
+    }
+    private static StageInfo MusicNotesPuzzle()
+    {
+        var offset = Rnd.Range(0, 12);
+        var majorScale = new[] { 0, 2, 4, 5, 7 }.Select(n => (n + offset) % 12).ToList().Shuffle();
+        var badNote = Enumerable.Range(0, 12).Where(n => n != (9 + offset) % 12 && n != (11 + offset) % 12 && !majorScale.Contains(n)).PickRandom();
+        var ix = Rnd.Range(0, 6);
+        majorScale.Insert(ix, badNote);
+        var noteNames = majorScale.Select(note => _noteNames[note].PickRandom()).ToArray();
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setButtonLabel(i, noteNames[i], m.MusicFont, m.MusicFontMaterial, 92); },
+            Logging = _omitLogging ? null : string.Format("First five notes of the {0} major scale", _noteNames[offset])
+        };
+    }
+    private static StageInfo LondonUndergroundPuzzle()
+    {
+        return generateItemizedPuzzle(_londonUndergroundStations, "Stations from the {0}", _londonUndergroundLines);
+    }
+    private static StageInfo SimonSpeaksWordsPuzzle()
+    {
+        tryAgain:
+        var isCol = Rnd.Range(0, 2) != 0;
+        var rowCol = Rnd.Range(0, 9);
+        var goodWords = (isCol ? Enumerable.Range(0, _simonSpeaksWords.Length).Select(row => _simonSpeaksWords[row][rowCol]) : _simonSpeaksWords[rowCol]).Where(sy => sy != "").ToList();
+        if (goodWords.Count < 5)
+            goto tryAgain;
+        var badWord = _simonSpeaksWords.SelectMany(s => s).Where(sy => sy != "" && !goodWords.Contains(sy)).PickRandom();
+        var ix = Rnd.Range(0, 6);
+        goodWords.RemoveRange(5, goodWords.Count - 5);
+        goodWords.Insert(ix, badWord);
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setOnHover(i, goodWords[i]); },
+            Logging = _omitLogging ? null : isCol ? string.Format("{0} words from Simon Speaks", _simonSpeaksColumns[rowCol]) : string.Format("Words from Simon Speaks that mean {0}", _simonSpeaksRows[rowCol])
+        };
+    }
+    private static StageInfo IkeaPuzzle()
+    {
+        var isProduct = Rnd.Range(0, 2) != 0;
+        var goodWords = (isProduct ? _ikeaProducts : _ikeaBrands).ToList().Shuffle();
+        var badWord = (isProduct ? _ikeaBrands : _ikeaProducts).PickRandom();
+        goodWords.RemoveRange(5, goodWords.Count - 5);
+        var ix = Rnd.Range(0, 6);
+        goodWords.Insert(ix, badWord);
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Logging = string.Format("IKEA {0} names", isProduct ? "product" : "brand"),
+            Setup = (m, i) => { m.setOnHover(i, goodWords[i]); }
+        };
+    }
+    private static StageInfo LionsSharePuzzle()
+    {
+        tryAgain:
+        var year = Rnd.Range(1, 17);
+        var goodLions = _lionsShareLions.Where(l => l.AliveFrom <= year && l.AliveUntil >= year).ToList().Shuffle();
+        var badLion = _lionsShareLions.Where(l => l.AliveFrom > year || l.AliveUntil < year).PickRandom();
+        goodLions.RemoveRange(5, goodLions.Count - 5);
+        var ix = Rnd.Range(0, 6);
+        goodLions.Insert(ix, badLion);
+
+        // Make sure the puzzle is not accidentally ambiguous
+        for (int y = 1; y <= 16; y++)
+            if (y != year && goodLions.Count(l => l.AliveFrom <= y && l.AliveUntil >= y) == 5 && goodLions.First(l => l.AliveFrom > y || l.AliveUntil < y) != badLion)
+                goto tryAgain;
+
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Logging = string.Format(@"Lions that are alive in Year {0} in Lion’s Share", year),
+            Setup = (m, i) => { m.setOnHover(i, goodLions[i].Name); }
+        };
+    }
+    private static StageInfo DrDoctorPuzzle()
+    {
+        var symptoms = _drDoctorDiseases.SelectMany(d => d.Symptoms).Distinct().ToArray();
+        tryAgain:
+        var symptom = symptoms.PickRandom();
+        var goodDiseases = _drDoctorDiseases.Where(d => d.Symptoms.Contains(symptom)).ToList().Shuffle();
+        if (goodDiseases.Count < 5)
+            goto tryAgain;
+        var badDisease = _drDoctorDiseases.Where(d => !d.Symptoms.Contains(symptom)).PickRandom();
+        var ix = Rnd.Range(0, 6);
+        goodDiseases.RemoveRange(5, goodDiseases.Count - 5);
+        goodDiseases.Insert(ix, badDisease);
+
+        // Make sure the puzzle is not accidentally ambiguous
+        foreach (var sy in symptoms)
+            if (sy != symptom && goodDiseases.Count(d => d.Symptoms.Contains(sy)) == 5 && goodDiseases.First(d => !d.Symptoms.Contains(sy)) != badDisease)
+                goto tryAgain;
+
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Logging = string.Format("Dr. Doctor diseases that have {0} as a symptom", symptom),
+            Setup = (m, i) => { m.setOnHover(i, goodDiseases[i].Disease); }
+        };
+    }
+    #endregion
 
     private void setCountryFlag(int i, string country)
     {
@@ -836,6 +978,7 @@ public class OddOneOutModule : MonoBehaviour
 
     private static StageInfo generateItemizedPuzzle(string[][] groups, string loggingFmt, string[] groupNames)
     {
+        // This code handles only text strings. FriendshipSymbolsPuzzle() is the same but for textures.
         tryAgain:
         var goodGroupIx = Rnd.Range(0, groups.Length);
         var goodGroup = groups[goodGroupIx].ToList().Shuffle();
@@ -852,14 +995,13 @@ public class OddOneOutModule : MonoBehaviour
         return new StageInfo
         {
             CorrectIndex = ix,
-            Setup = (m, i) => { m.setOnHover(i, goodGroup[i], .0011f); },
+            Setup = (m, i) => { m.setOnHover(i, goodGroup[i]); },
             Logging = _omitLogging ? null : string.Format(loggingFmt, groupNames[goodGroupIx])
         };
     }
 
-    private void setOnHover(int i, string display, float w = 0.0015f)
+    private void setOnHover(int i, string display)
     {
-        _showOnHoverWidth = w;
         _showOnHover[i] = display;
         if (_curHover == i)
             setHoverText(_showOnHover[i]);
@@ -1034,7 +1176,12 @@ public class OddOneOutModule : MonoBehaviour
         var generatorIxs = Enumerable.Range(0, _generators.Length).ToList().Shuffle();
         for (int i = 0; i < 5; i++)
         {
+            //*
             _stages[i] = _generators[generatorIxs[i]]();
+            /*/
+            // DEBUG! TESTING!
+            _stages[i] = _generators.Last()();
+            /**/
             matches[_stages[i].CorrectIndex]++;
         }
 
@@ -1067,7 +1214,20 @@ public class OddOneOutModule : MonoBehaviour
     private void setHoverText(string text)
     {
         Display.text = text ?? "";
-        Display.transform.localScale = new Vector3(_showOnHoverWidth, .0015f, .0015f);
+
+        // Determine the width of the text mesh
+        var oldParent = Display.transform.parent;
+        Display.transform.parent = null;
+        Display.transform.localPosition = new Vector3(0, 0, 0);
+        Display.transform.localRotation = Quaternion.identity;
+        Display.transform.localScale = new Vector3(1, 1, 1);
+        var bounds = Display.gameObject.GetComponent<Renderer>().bounds.size;
+
+        // Make sure that it fits
+        Display.transform.parent = oldParent;
+        Display.transform.localPosition = new Vector3(0, 0.0001f, 0);
+        Display.transform.localEulerAngles = new Vector3(90, 0, 0);
+        Display.transform.localScale = new Vector3(.0015f * (bounds.x > 72 ? 72 / bounds.x : 1), 0.0015f, 0.0015f);
     }
 
     private IEnumerator Morse()
@@ -1122,7 +1282,6 @@ public class OddOneOutModule : MonoBehaviour
             if (!first)
                 yield return new WaitForSeconds(.147f);
         }
-        _showOnHoverWidth = .0015f;
 
         if (first)
         {
