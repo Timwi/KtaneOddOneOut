@@ -12,11 +12,10 @@ using Rnd = UnityEngine.Random;
 /// </summary>
 public class OddOneOutModule : MonoBehaviour
 {
-    const bool _omitLogging = false;
-
     public KMBombInfo Bomb;
     public KMBombModule Module;
     public KMAudio Audio;
+    public KMColorblindMode ColorblindMode;
 
     public KMSelectable[] Buttons;
     public TextMesh[] ButtonLabels;
@@ -27,6 +26,7 @@ public class OddOneOutModule : MonoBehaviour
     public MeshRenderer[] Leds;
     public Material LedOn;
     public Material LedOff;
+    public TextMesh ColorblindIndicator;
 
     public MeshRenderer LedPuzzleIndicator;
     public Color[] PuzzleIndicatorColors;
@@ -290,11 +290,11 @@ public class OddOneOutModule : MonoBehaviour
 
         _countryNameGroups = newArray(
             // group by first letter
-            _countryNames.GroupBy(cn => cn.Substring(0, 1).ToUpperInvariant()).Select(gr => new GroupInfo<string> { Key = gr.Key, Items = gr.ToArray(), Logging = _omitLogging ? null : string.Format("Countries that start with {0}", gr.Key) }).ToArray(),
+            _countryNames.GroupBy(cn => cn.Substring(0, 1).ToUpperInvariant()).Select(gr => new GroupInfo<string> { Key = gr.Key, Items = gr.ToArray(), Logging = string.Format("Countries that start with {0}", gr.Key) }).ToArray(),
             // group by last letter
-            _countryNames.GroupBy(cn => cn.Substring(cn.Length - 1, 1).ToUpperInvariant()).Select(gr => new GroupInfo<string> { Key = gr.Key, Items = gr.ToArray(), Logging = _omitLogging ? null : string.Format("Countries that end with {0}", gr.Key) }).ToArray(),
+            _countryNames.GroupBy(cn => cn.Substring(cn.Length - 1, 1).ToUpperInvariant()).Select(gr => new GroupInfo<string> { Key = gr.Key, Items = gr.ToArray(), Logging = string.Format("Countries that end with {0}", gr.Key) }).ToArray(),
             // group by whether it contains an “E” or not
-            _countryNames.GroupBy(cn => cn.ContainsIgnoreCase("E") ? "contain" : "do not contain").Select(gr => new GroupInfo<string> { Key = gr.Key, Items = gr.ToArray(), Logging = _omitLogging ? null : string.Format("Countries that {0} the letter “E”", gr.Key) }).ToArray());
+            _countryNames.GroupBy(cn => cn.ContainsIgnoreCase("E") ? "contain" : "do not contain").Select(gr => new GroupInfo<string> { Key = gr.Key, Items = gr.ToArray(), Logging = string.Format("Countries that {0} the letter “E”", gr.Key) }).ToArray());
     }
 
     private static readonly Func<StageInfo>[] _generators = newArray<Func<StageInfo>>(
@@ -311,7 +311,7 @@ public class OddOneOutModule : MonoBehaviour
         EncodedLettersPuzzle,
 
         // COLORS PUZZLES
-        () => new Func<StageInfo>[] { ColorWithNamesPuzzle, ColorsWithNumbersPuzzle }.PickRandom()(),
+        () => new Func<StageInfo>[] { ColorsWithNamesPuzzle, ColorsWithNumbersPuzzle }.PickRandom()(),
 
         // WORDS/NAMES FROM OTHER MODULES
         () => new Func<StageInfo>[] { ModuleWordsPuzzle, ModuleNamesPuzzle, GroceryItemsPuzzle, BenedictCumberbatchPuzzle }.PickRandom()(),
@@ -343,7 +343,7 @@ public class OddOneOutModule : MonoBehaviour
                         m.setButtonLabel(i, numbers[i].ToString(), size: 92);
                         m._puzzleLedColor = 1;
                     },
-                    Logging = _omitLogging ? null : string.Format("Numbers that are {1} modulo {0}", mod, target)
+                    Logging = string.Format("Numbers that are {1} modulo {0}", mod, target)
                 };
         }
     }
@@ -412,7 +412,7 @@ public class OddOneOutModule : MonoBehaviour
                         m.setButtonLabel(i, letters[i].ToString());
                         m._puzzleLedColor = 1;
                     },
-                    Logging = _omitLogging ? null : string.Format("Letters {0} away from each other (with wrap around)", step)
+                    Logging = string.Format("Letters {0} away from each other (with wrap around)", step)
                 };
         }
     }
@@ -435,7 +435,7 @@ public class OddOneOutModule : MonoBehaviour
                         m.setButtonLabel(i, letters[i].ToString());
                         m._puzzleLedColor = atbash ? 2 : 3;
                     },
-                    Logging = _omitLogging ? null : string.Format("{0} of {1}", atbash ? "Atbash" : "Rot13", oldWord)
+                    Logging = string.Format("{0} of {1}", atbash ? "Atbash" : "Rot13", oldWord)
                 };
         }
     }
@@ -459,7 +459,7 @@ public class OddOneOutModule : MonoBehaviour
                         m.setButtonLabel(i, letters[i].ToString());
                         m._puzzleLedColor = 4;
                     },
-                    Logging = _omitLogging ? null : string.Format("Letters that start with {0} in Morse", "...--.--".Substring(2 * goodGroupIx, 2))
+                    Logging = string.Format("Letters that start with {0} in Morse", "...--.--".Substring(2 * goodGroupIx, 2))
                 };
         }
     }
@@ -486,7 +486,7 @@ public class OddOneOutModule : MonoBehaviour
                         m.setButtonLabel(i, letters[i].ToString());
                         m._puzzleLedColor = 5;
                     },
-                    Logging = _omitLogging ? null : string.Format("Letters that have {0} in their international maritime signalling flag", "white,blue,red,yellow,black".Split(',')[targetColor])
+                    Logging = string.Format("Letters that have {0} in their international maritime signalling flag", "white,blue,red,yellow,black".Split(',')[targetColor])
                 };
         }
     }
@@ -511,7 +511,7 @@ public class OddOneOutModule : MonoBehaviour
                         m.setButtonLabel(i, letters[i].ToString());
                         m._puzzleLedColor = 6;
                     },
-                    Logging = _omitLogging ? null : string.Format("Letters with {0} in their semaphore", _semaphoreGroups[targetGroupIx].Key)
+                    Logging = string.Format("Letters with {0} in their semaphore", _semaphoreGroups[targetGroupIx].Key)
                 };
         }
     }
@@ -535,7 +535,7 @@ public class OddOneOutModule : MonoBehaviour
                         m.setButtonLabel(i, letters[i].ToString());
                         m._puzzleLedColor = 7;
                     },
-                    Logging = _omitLogging ? null : string.Format("Letters that {0} a dot in pigpen cipher", "have,don’t have".Split(',')[targetGroupIx])
+                    Logging = string.Format("Letters that {0} a dot in pigpen cipher", "have,don’t have".Split(',')[targetGroupIx])
                 };
         }
     }
@@ -547,7 +547,7 @@ public class OddOneOutModule : MonoBehaviour
         var ix = Rnd.Range(0, 6);
         goodSymbols.RemoveRange(5, goodSymbols.Count - 5);
         goodSymbols.Insert(ix, badSymbol);
-        return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i], size: 64); }, Logging = _omitLogging ? null : string.Format("Chemical element symbols") };
+        return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i], size: 64); }, Logging = string.Format("Chemical element symbols") };
     }
     private static StageInfo ChemicalElementRowColumnPuzzle()
     {
@@ -561,7 +561,7 @@ public class OddOneOutModule : MonoBehaviour
         var ix = Rnd.Range(0, 6);
         goodSymbols.RemoveRange(5, goodSymbols.Count - 5);
         goodSymbols.Insert(ix, badSymbol);
-        return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i], size: 64); }, Logging = _omitLogging ? null : string.Format("Chemical elements from {0} {1} of the periodic table", isCol ? "column" : "row", rowCol + 1) };
+        return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i], size: 64); }, Logging = string.Format("Chemical elements from {0} {1} of the periodic table", isCol ? "column" : "row", rowCol + 1) };
     }
     private static StageInfo USStateAbbreviationsPuzzle()
     {
@@ -571,7 +571,7 @@ public class OddOneOutModule : MonoBehaviour
         var ix = Rnd.Range(0, 6);
         goodAbbrevs.RemoveRange(5, goodAbbrevs.Count - 5);
         goodAbbrevs.Insert(ix, badAbbrev);
-        return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodAbbrevs[i], size: 64); }, Logging = _omitLogging ? null : string.Format("US state abbreviations") };
+        return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setButtonLabel(i, goodAbbrevs[i], size: 64); }, Logging = string.Format("US state abbreviations") };
     }
     private static StageInfo CountryISOCodesPuzzle()
     {
@@ -584,7 +584,7 @@ public class OddOneOutModule : MonoBehaviour
             goodCodes.RemoveRange(5, goodCodes.Count - 5);
             goodCodes.Insert(ix, badCode);
             if (!isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _companyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
-                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("ISO codes of countries in “Flags”") };
+                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = string.Format("ISO codes of countries in “Flags”") };
         }
     }
     private static StageInfo CurrencyISOCodesPuzzle()
@@ -598,7 +598,7 @@ public class OddOneOutModule : MonoBehaviour
             goodCodes.RemoveRange(5, goodCodes.Count - 5);
             goodCodes.Insert(ix, badCode);
             if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _companyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
-                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("ISO codes of currencies in “Flags” and “Foreign Exchange Rates”") };
+                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = string.Format("ISO codes of currencies in “Flags” and “Foreign Exchange Rates”") };
         }
     }
     private static StageInfo MorseWarPuzzle()
@@ -612,7 +612,7 @@ public class OddOneOutModule : MonoBehaviour
             goodCodes.RemoveRange(5, goodCodes.Count - 5);
             goodCodes.Insert(ix, badCode);
             if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _companyCodes))
-                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("Codes from “Morse War”") };
+                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = string.Format("Codes from “Morse War”") };
         }
     }
     private static StageInfo StockMarketPuzzle()
@@ -626,7 +626,7 @@ public class OddOneOutModule : MonoBehaviour
             goodCodes.RemoveRange(5, goodCodes.Count - 5);
             goodCodes.Insert(ix, badCode);
             if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
-                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = _omitLogging ? null : string.Format("Company codes from “Stock Market”") };
+                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = string.Format("Company codes from “Stock Market”") };
         }
     }
     private static StageInfo EncodedLettersPuzzle()
@@ -653,7 +653,7 @@ public class OddOneOutModule : MonoBehaviour
         return new StageInfo
         {
             CorrectIndex = ix,
-            Logging = _omitLogging ? null : string.Format("{0} (encoded)", origWord),
+            Logging = string.Format("{0} (encoded)", origWord),
             Setup = (m, i) =>
             {
                 switch (encodings[i])
@@ -704,7 +704,7 @@ public class OddOneOutModule : MonoBehaviour
             }
         };
     }
-    private static StageInfo ColorWithNamesPuzzle()
+    private static StageInfo ColorsWithNamesPuzzle()
     {
         var powers = new[] { 1, 3, 9 };
         tryAgain:
@@ -725,7 +725,7 @@ public class OddOneOutModule : MonoBehaviour
         return new StageInfo
         {
             CorrectIndex = ix,
-            Logging = _omitLogging ? null : string.Format("Named colors where {0} has value {1}", "blue,green,red".Split(',')[trit], targetValue),
+            Logging = string.Format("Named colors where {0} has value {1}", "blue,green,red".Split(',')[trit], targetValue),
             Setup = (m, i) =>
             {
                 m.ButtonRenderers[i].material.color = new Color(((goodColors[i] / 9) % 3) * .5f, ((goodColors[i] / 3) % 3) * .5f, (goodColors[i] % 3) * .5f);
@@ -738,16 +738,18 @@ public class OddOneOutModule : MonoBehaviour
         var colors = Enumerable.Range(0, 8).ToList().Shuffle();
         var ix = Rnd.Range(0, 6);
         var offset = Rnd.Range(11, 93);
+        var colorNames = "black,blue,green,cyan,red,magenta,yellow,white".Split(',');
 
         return new StageInfo
         {
             CorrectIndex = ix,
-            Logging = _omitLogging ? null : string.Format("Numbered colors with offset {0}", offset),
+            Logging = string.Format("Numbered colors with offset {0}", offset),
             Setup = (m, i) =>
             {
                 m.ButtonRenderers[i].material.color = new Color(colors[i] / 4, (colors[i] / 2) % 2, colors[i] % 2);
                 var number = colors[(i == ix) ? 6 : i];
                 m.setButtonLabel(i, (number + offset).ToString(), m.StandardFont, m.StandardFontMaterial, 92, white: colors[i] == 0);
+                m.setOnHover(i, colorNames[colors[i]]);
             }
         };
     }
@@ -773,7 +775,7 @@ public class OddOneOutModule : MonoBehaviour
         {
             CorrectIndex = ix,
             Setup = (m, i) => { m.setOnHover(i, _benedictHeadings[i == ix ? badHeading : coords[i] % w] + _benedictTable[coords[i] / w][coords[i] % w]); },
-            Logging = _omitLogging ? null : "Names from Benedict Cumberbatch"
+            Logging = "Names from Benedict Cumberbatch"
         };
     }
     private static StageInfo FriendshipSymbolsPuzzle()
@@ -789,7 +791,7 @@ public class OddOneOutModule : MonoBehaviour
         {
             CorrectIndex = ix,
             Setup = (m, i) => { m.setButtonImage(i, goodFriendshipSymbols[i], m.FriendshipSymbols, size: .015f); },
-            Logging = _omitLogging ? null : string.Format("Symbols from the {0} in Friendship", _friendshipSymbolGroupNames[goodRowIx])
+            Logging = string.Format("Symbols from the {0} in Friendship", _friendshipSymbolGroupNames[goodRowIx])
         };
     }
     private static StageInfo ZooAnimalsPuzzle()
@@ -808,7 +810,7 @@ public class OddOneOutModule : MonoBehaviour
         return new StageInfo
         {
             CorrectIndex = ix,
-            Logging = _omitLogging ? null : string.Format("Line of Zoo animals from {0} going {1}", _zooAnimals[inf.StartHex], "NW,N,NE,SE,S,SW".Split(',')[inf.Direction]),
+            Logging = string.Format("Line of Zoo animals from {0} going {1}", _zooAnimals[inf.StartHex], "NW,N,NE,SE,S,SW".Split(',')[inf.Direction]),
             Setup = (m, i) => { m.setButtonImage(i, goodAnimals[i], m.ZooAnimalTextures, .015f); }
         };
     }
@@ -825,7 +827,7 @@ public class OddOneOutModule : MonoBehaviour
         {
             CorrectIndex = ix,
             Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i] == 26 ? "." : ((char) ('a' + goodSymbols[i])).ToString(), m.TunnelFont, m.TunnelFontMaterial, size: 104, z: .0004f); },
-            Logging = _omitLogging ? null : string.Format("3D Tunnels symbols where {0} is {1}", "XYZ"[dimIx], val)
+            Logging = string.Format("3D Tunnels symbols where {0} is {1}", "XYZ"[dimIx], val)
         };
     }
     private static StageInfo QuestionMarkSymbolsPuzzle()
@@ -840,7 +842,7 @@ public class OddOneOutModule : MonoBehaviour
         {
             CorrectIndex = ix,
             Setup = (m, i) => { m.setButtonImage(i, row[i], m.QuestionMarkTextures); },
-            Logging = _omitLogging ? null : string.Format("Symbols from row {0} in Question Mark", goodRow + 1)
+            Logging = string.Format("Symbols from row {0} in Question Mark", goodRow + 1)
         };
     }
     private static StageInfo CountryFlagsPuzzle()
@@ -863,7 +865,7 @@ public class OddOneOutModule : MonoBehaviour
         {
             CorrectIndex = ix,
             Setup = (m, i) => { m.setCountryFlag(i, goodCountries[i]); },
-            Logging = _omitLogging ? null : goodGroup.Logging
+            Logging = goodGroup.Logging
         };
     }
     private static StageInfo MusicNotesPuzzle()
@@ -878,7 +880,7 @@ public class OddOneOutModule : MonoBehaviour
         {
             CorrectIndex = ix,
             Setup = (m, i) => { m.setButtonLabel(i, noteNames[i], m.MusicFont, m.MusicFontMaterial, 92); },
-            Logging = _omitLogging ? null : string.Format("First five notes of the {0} major scale", _noteNames[offset])
+            Logging = string.Format("First five notes of the {0} major scale", _noteNames[offset])
         };
     }
     private static StageInfo LondonUndergroundPuzzle()
@@ -901,7 +903,7 @@ public class OddOneOutModule : MonoBehaviour
         {
             CorrectIndex = ix,
             Setup = (m, i) => { m.setOnHover(i, goodWords[i]); },
-            Logging = _omitLogging ? null : isCol ? string.Format("{0} words from Simon Speaks", _simonSpeaksColumns[rowCol]) : string.Format("Words from Simon Speaks that mean {0}", _simonSpeaksRows[rowCol])
+            Logging = isCol ? string.Format("{0} words from Simon Speaks", _simonSpeaksColumns[rowCol]) : string.Format("Words from Simon Speaks that mean {0}", _simonSpeaksRows[rowCol])
         };
     }
     private static StageInfo IkeaPuzzle()
@@ -996,7 +998,7 @@ public class OddOneOutModule : MonoBehaviour
         {
             CorrectIndex = ix,
             Setup = (m, i) => { m.setOnHover(i, goodGroup[i]); },
-            Logging = _omitLogging ? null : string.Format(loggingFmt, groupNames[goodGroupIx])
+            Logging = string.Format(loggingFmt, groupNames[goodGroupIx])
         };
     }
 
@@ -1171,17 +1173,14 @@ public class OddOneOutModule : MonoBehaviour
         _moduleId = _moduleIdCounter++;
         _stages = new StageInfo[6];
 
+        ColorblindIndicator.gameObject.SetActive(ColorblindMode.ColorblindModeActive);
+
         retry:
         var matches = new int[6];
         var generatorIxs = Enumerable.Range(0, _generators.Length).ToList().Shuffle();
         for (int i = 0; i < 5; i++)
         {
-            //*
             _stages[i] = _generators[generatorIxs[i]]();
-            /*/
-            // DEBUG! TESTING!
-            _stages[i] = _generators.Last()();
-            /**/
             matches[_stages[i].CorrectIndex]++;
         }
 
@@ -1189,7 +1188,7 @@ public class OddOneOutModule : MonoBehaviour
         if (unique.Length != 1)
             goto retry;
 
-        _stages[5] = new StageInfo { CorrectIndex = Array.IndexOf(matches, unique[0]), Setup = (m, i) => { }, Logging = _omitLogging ? null : "Final stage" };
+        _stages[5] = new StageInfo { CorrectIndex = Array.IndexOf(matches, unique[0]), Setup = (m, i) => { }, Logging = "Final stage" };
         SetStage(0);
 
         for (int i = 0; i < Buttons.Length; i++)
@@ -1267,6 +1266,7 @@ public class OddOneOutModule : MonoBehaviour
     {
         _puzzleLedColor = 0;
         LedPuzzleIndicator.material.color = PuzzleIndicatorColors[0];
+        ColorblindIndicator.text = "";
 
         // Set defaults:
         for (int i = 0; i < 6; i++)
@@ -1297,6 +1297,7 @@ public class OddOneOutModule : MonoBehaviour
             }
 
         LedPuzzleIndicator.material.color = PuzzleIndicatorColors[_puzzleLedColor];
+        ColorblindIndicator.text = _puzzleLedColor == 0 ? "" : "RYGTBPI".Substring(_puzzleLedColor - 1, 1);
     }
 
     private KMSelectable.OnInteractHandler pressed(int i)
