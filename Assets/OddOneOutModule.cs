@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using OddOneOut;
 using UnityEngine;
 using Rnd = UnityEngine.Random;
@@ -1319,5 +1321,67 @@ public class OddOneOutModule : MonoBehaviour
 
             return false;
         };
+    }
+
+
+#pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"!{0} press 1 [number in reading order] | !{0} press TL [TL, TM, TR, BL, BM, BR] | !{0} cycle | !{0} colorblind";
+#pragma warning restore 414
+
+    IEnumerator ProcessTwitchCommand(string command)
+    {
+        if (command == "colorblind")
+        {
+            ColorblindIndicator.gameObject.SetActive(true);
+            yield return null;
+            yield break;
+        }
+
+        if (command == "cycle")
+        {
+            yield return null;
+
+            MethodInfo highlightMethod = null;
+            object enumValue = null;
+
+            for (int i = 0; i < 6; i++)
+            {
+                // Hacky time! Use Reflection to get the game to show the button highlight
+                var h = Buttons[i].Highlight.GetComponent("Highlightable");
+                if (highlightMethod == null)
+                {
+                    var e = h.GetType().GetNestedType("HighlightTypeEnum", BindingFlags.Public);
+                    highlightMethod = h.GetType().GetMethod("On", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(bool), e }, null);
+                    enumValue = Enum.ToObject(e, 1);
+                }
+
+                highlightMethod.Invoke(h, new[] { true, enumValue });
+                if (_showOnHover[i] != null)
+                    setHoverText(_showOnHover[i]);
+
+                yield return new WaitForSeconds(1.5f);
+
+                highlightMethod.Invoke(h, new[] { false, enumValue });
+            }
+            _curHover = null;
+            Display.text = "";
+            yield return new WaitForSeconds(.5f);
+            yield break;
+        }
+
+        var match = Regex.Match(command, @"^\s*press\s+([1-6]|[TB][LMCR]|[LMCR][TB])\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        if (!match.Success)
+            yield break;
+
+        yield return null;
+        switch (match.Groups[1].Value.ToLowerInvariant())
+        {
+            case "1": case "tl": case "lt": Buttons[0].OnInteract(); break;
+            case "2": case "tm": case "mt": case "tc": case "ct": Buttons[1].OnInteract(); break;
+            case "3": case "tr": case "rt": Buttons[2].OnInteract(); break;
+            case "4": case "bl": case "lb": Buttons[3].OnInteract(); break;
+            case "5": case "bm": case "mb": case "bc": case "cb": Buttons[4].OnInteract(); break;
+            case "6": case "br": case "rb": Buttons[5].OnInteract(); break;
+        }
     }
 }
