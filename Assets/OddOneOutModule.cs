@@ -41,6 +41,7 @@ public class OddOneOutModule : MonoBehaviour
     public Texture[] ZooAnimalTextures;
     public Texture[] QuestionMarkTextures;
     public Texture[] FriendshipSymbols;
+    public Texture[] DragonEnergyTextures;
 
     public Font StandardFont;
     public Font ZoniFont;
@@ -211,6 +212,8 @@ public class OddOneOutModule : MonoBehaviour
         new DiseaseInfo { Disease = "Orientitis", Symptoms = new[] { "Gas", "Numbness", "Loss of Smell" } },
         new DiseaseInfo { Disease = "Huntington’s disease", Symptoms = new[] { "Cold Hands", "Sleepiness", "Throat irritation" } });
 
+    private static readonly string[] _dragonEnergyWords = "Angry,Blessing,Child,Curse,Dragon,Dream,Emotion,Energy,Female,Force,Forest,Friend,Happiness,Hate,Heart,Heaven,Hope,Kindness,Longevity,Love,Loyal,Male,Mountain,Night,Pure,River,Soul,Spirit,Urgency,Wind".Split(',');
+
     static OddOneOutModule()
     {
         _zoniDotNumbers = new List<List<int>>();
@@ -322,7 +325,7 @@ public class OddOneOutModule : MonoBehaviour
         () => new Func<StageInfo>[] { MusicNotesPuzzle, LondonUndergroundPuzzle, SimonSpeaksWordsPuzzle, IkeaPuzzle, LionsSharePuzzle, DrDoctorPuzzle }.PickRandom()(),
 
         // SYMBOLS/GRAPHICS
-        () => new Func<StageInfo>[] { CountryFlagsPuzzle, FriendshipSymbolsPuzzle, ZooAnimalsPuzzle, ThreeDTunnelsSymbolsPuzzle, QuestionMarkSymbolsPuzzle }.PickRandom()()
+        () => new Func<StageInfo>[] { CountryFlagsPuzzle, FriendshipSymbolsPuzzle, ZooAnimalsPuzzle, ThreeDTunnelsSymbolsPuzzle, QuestionMarkSymbolsPuzzle, DragonEnergyPuzzle }.PickRandom()()
     );
 
     #region Puzzles
@@ -780,96 +783,6 @@ public class OddOneOutModule : MonoBehaviour
             Logging = "Names from Benedict Cumberbatch"
         };
     }
-    private static StageInfo FriendshipSymbolsPuzzle()
-    {
-        // This code is the same as generateItemizedPuzzle() except that it uses textures instead of text
-        var goodRowIx = Rnd.Range(0, _friendshipSymbolGroups.Length);
-        var goodFriendshipSymbols = _friendshipSymbolGroups[goodRowIx].ToList().Shuffle();
-        goodFriendshipSymbols.RemoveRange(5, goodFriendshipSymbols.Count - 5);
-        var badFriendshipSymbol = Enumerable.Range(0, _friendshipSymbolGroups.Length).Where(i => i != goodRowIx).SelectMany(i => _friendshipSymbolGroups[i]).PickRandom();
-        var ix = Rnd.Range(0, 6);
-        goodFriendshipSymbols.Insert(ix, badFriendshipSymbol);
-        return new StageInfo
-        {
-            CorrectIndex = ix,
-            Setup = (m, i) => { m.setButtonImage(i, goodFriendshipSymbols[i], m.FriendshipSymbols, size: .015f); },
-            Logging = string.Format("Symbols from the {0} in Friendship", _friendshipSymbolGroupNames[goodRowIx])
-        };
-    }
-    private static StageInfo ZooAnimalsPuzzle()
-    {
-        var inf = Hex.LargeHexagon(5)
-            .SelectMany(hex => Enumerable.Range(0, 6).Select(direction =>
-                ((hex + 5 * Hex.GetDirection(direction)).Distance >= 5)
-                    ? null
-                    : new { StartHex = hex, Direction = direction, Line = Enumerable.Range(0, 5).Select(dist => hex + dist * Hex.GetDirection(direction)).ToArray() }))
-            .Where(h => h != null)
-            .PickRandom();
-
-        var goodAnimals = inf.Line.Select(hex => _zooAnimals[hex]).ToList().Shuffle();
-        var ix = Rnd.Range(0, 6);
-        goodAnimals.Insert(ix, _zooAnimals.Where(kvp => kvp.Key != inf.StartHex + 6 * Hex.GetDirection(inf.Direction) && kvp.Key != inf.StartHex - Hex.GetDirection(inf.Direction) && !inf.Line.Contains(kvp.Key)).PickRandom().Value);
-        return new StageInfo
-        {
-            CorrectIndex = ix,
-            Logging = string.Format("Line of Zoo animals from {0} going {1}", _zooAnimals[inf.StartHex], "NW,N,NE,SE,S,SW".Split(',')[inf.Direction]),
-            Setup = (m, i) => { m.setButtonImage(i, goodAnimals[i], m.ZooAnimalTextures, .015f); }
-        };
-    }
-    private static StageInfo ThreeDTunnelsSymbolsPuzzle()
-    {
-        var dimIx = Rnd.Range(0, 3);
-        var dim = new[] { 1, 3, 9 }[dimIx];
-        var val = Rnd.Range(0, 3);
-        var goodSymbols = Enumerable.Range(0, 27).Where(i => (i / dim) % 3 == val).ToList().Shuffle().Take(5).ToList();
-        var badSymbol = Enumerable.Range(0, 27).Where(i => (i / dim) % 3 != val).PickRandom();
-        var ix = Rnd.Range(0, 6);
-        goodSymbols.Insert(ix, badSymbol);
-        return new StageInfo
-        {
-            CorrectIndex = ix,
-            Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i] == 26 ? "." : ((char) ('a' + goodSymbols[i])).ToString(), m.TunnelFont, m.TunnelFontMaterial, size: 104, z: .0004f); },
-            Logging = string.Format("3D Tunnels symbols where {0} is {1}", "XYZ"[dimIx], val)
-        };
-    }
-    private static StageInfo QuestionMarkSymbolsPuzzle()
-    {
-        var goodRow = Rnd.Range(0, 3);
-        int badRow;
-        do { badRow = Rnd.Range(0, 3); } while (badRow == goodRow);
-        var row = Enumerable.Range(0, 5).Select(i => (goodRow + 1) + "-" + (i + 1)).ToList().Shuffle();
-        var ix = Rnd.Range(0, 6);
-        row.Insert(ix, (badRow + 1) + "-" + Rnd.Range(1, 6));
-        return new StageInfo
-        {
-            CorrectIndex = ix,
-            Setup = (m, i) => { m.setButtonImage(i, row[i], m.QuestionMarkTextures); },
-            Logging = string.Format("Symbols from row {0} in Question Mark", goodRow + 1)
-        };
-    }
-    private static StageInfo CountryFlagsPuzzle()
-    {
-        tryAgain:
-        var groupSet = _countryNameGroups.PickRandom();
-        var goodGroup = groupSet.Where(g => g.Items.Length >= 5).PickRandom();
-        var badCountry = groupSet.Where(gr => gr != goodGroup).SelectMany(gr => gr.Items).PickRandom();
-        var goodCountries = goodGroup.Items.ToList().Shuffle();
-        var ix = Rnd.Range(0, 6);
-        goodCountries.RemoveRange(5, goodCountries.Count - 5);
-        goodCountries.Insert(ix, badCountry);
-
-        // Make sure the puzzle is not accidentally ambiguous
-        foreach (var otherGroupSet in _countryNameGroups)
-            if (otherGroupSet != groupSet && otherGroupSet.Any(gr => goodCountries.Count(cn => gr.Items.Contains(cn)) == 5))
-                goto tryAgain;
-
-        return new StageInfo
-        {
-            CorrectIndex = ix,
-            Setup = (m, i) => { m.setCountryFlag(i, goodCountries[i]); },
-            Logging = goodGroup.Logging
-        };
-    }
     private static StageInfo MusicNotesPuzzle()
     {
         var offset = Rnd.Range(0, 12);
@@ -968,6 +881,112 @@ public class OddOneOutModule : MonoBehaviour
             CorrectIndex = ix,
             Logging = string.Format("Dr. Doctor diseases that have {0} as a symptom", symptom),
             Setup = (m, i) => { m.setOnHover(i, goodDiseases[i].Disease); }
+        };
+    }
+    private static StageInfo CountryFlagsPuzzle()
+    {
+        tryAgain:
+        var groupSet = _countryNameGroups.PickRandom();
+        var goodGroup = groupSet.Where(g => g.Items.Length >= 5).PickRandom();
+        var badCountry = groupSet.Where(gr => gr != goodGroup).SelectMany(gr => gr.Items).PickRandom();
+        var goodCountries = goodGroup.Items.ToList().Shuffle();
+        var ix = Rnd.Range(0, 6);
+        goodCountries.RemoveRange(5, goodCountries.Count - 5);
+        goodCountries.Insert(ix, badCountry);
+
+        // Make sure the puzzle is not accidentally ambiguous
+        foreach (var otherGroupSet in _countryNameGroups)
+            if (otherGroupSet != groupSet && otherGroupSet.Any(gr => goodCountries.Count(cn => gr.Items.Contains(cn)) == 5))
+                goto tryAgain;
+
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setCountryFlag(i, goodCountries[i]); },
+            Logging = goodGroup.Logging
+        };
+    }
+    private static StageInfo FriendshipSymbolsPuzzle()
+    {
+        // This code is the same as generateItemizedPuzzle() except that it uses textures instead of text
+        var goodRowIx = Rnd.Range(0, _friendshipSymbolGroups.Length);
+        var goodFriendshipSymbols = _friendshipSymbolGroups[goodRowIx].ToList().Shuffle();
+        goodFriendshipSymbols.RemoveRange(5, goodFriendshipSymbols.Count - 5);
+        var badFriendshipSymbol = Enumerable.Range(0, _friendshipSymbolGroups.Length).Where(i => i != goodRowIx).SelectMany(i => _friendshipSymbolGroups[i]).PickRandom();
+        var ix = Rnd.Range(0, 6);
+        goodFriendshipSymbols.Insert(ix, badFriendshipSymbol);
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setButtonImage(i, goodFriendshipSymbols[i], m.FriendshipSymbols, size: .015f); },
+            Logging = string.Format("Symbols from the {0} in Friendship", _friendshipSymbolGroupNames[goodRowIx])
+        };
+    }
+    private static StageInfo ZooAnimalsPuzzle()
+    {
+        var inf = Hex.LargeHexagon(5)
+            .SelectMany(hex => Enumerable.Range(0, 6).Select(direction =>
+                ((hex + 5 * Hex.GetDirection(direction)).Distance >= 5)
+                    ? null
+                    : new { StartHex = hex, Direction = direction, Line = Enumerable.Range(0, 5).Select(dist => hex + dist * Hex.GetDirection(direction)).ToArray() }))
+            .Where(h => h != null)
+            .PickRandom();
+
+        var goodAnimals = inf.Line.Select(hex => _zooAnimals[hex]).ToList().Shuffle();
+        var ix = Rnd.Range(0, 6);
+        goodAnimals.Insert(ix, _zooAnimals.Where(kvp => kvp.Key != inf.StartHex + 6 * Hex.GetDirection(inf.Direction) && kvp.Key != inf.StartHex - Hex.GetDirection(inf.Direction) && !inf.Line.Contains(kvp.Key)).PickRandom().Value);
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Logging = string.Format("Line of Zoo animals from {0} going {1}", _zooAnimals[inf.StartHex], "NW,N,NE,SE,S,SW".Split(',')[inf.Direction]),
+            Setup = (m, i) => { m.setButtonImage(i, goodAnimals[i], m.ZooAnimalTextures, .015f); }
+        };
+    }
+    private static StageInfo ThreeDTunnelsSymbolsPuzzle()
+    {
+        var dimIx = Rnd.Range(0, 3);
+        var dim = new[] { 1, 3, 9 }[dimIx];
+        var val = Rnd.Range(0, 3);
+        var goodSymbols = Enumerable.Range(0, 27).Where(i => (i / dim) % 3 == val).ToList().Shuffle().Take(5).ToList();
+        var badSymbol = Enumerable.Range(0, 27).Where(i => (i / dim) % 3 != val).PickRandom();
+        var ix = Rnd.Range(0, 6);
+        goodSymbols.Insert(ix, badSymbol);
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setButtonLabel(i, goodSymbols[i] == 26 ? "." : ((char) ('a' + goodSymbols[i])).ToString(), m.TunnelFont, m.TunnelFontMaterial, size: 104, z: .0004f); },
+            Logging = string.Format("3D Tunnels symbols where {0} is {1}", "XYZ"[dimIx], val)
+        };
+    }
+    private static StageInfo QuestionMarkSymbolsPuzzle()
+    {
+        var goodRow = Rnd.Range(0, 3);
+        int badRow;
+        do { badRow = Rnd.Range(0, 3); } while (badRow == goodRow);
+        var row = Enumerable.Range(0, 5).Select(i => (goodRow + 1) + "-" + (i + 1)).ToList().Shuffle();
+        var ix = Rnd.Range(0, 6);
+        row.Insert(ix, (badRow + 1) + "-" + Rnd.Range(1, 6));
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setButtonImage(i, row[i], m.QuestionMarkTextures); },
+            Logging = string.Format("Symbols from row {0} in Question Mark", goodRow + 1)
+        };
+    }
+    private static StageInfo DragonEnergyPuzzle()
+    {
+        var isCol = Rnd.Range(0, 2) != 0;
+        var rowCol = Rnd.Range(0, isCol ? 5 : 6);
+        var goodWords = (isCol ? Enumerable.Range(0, 6).Select(row => _dragonEnergyWords[row * 5 + rowCol]) : Enumerable.Range(0, 5).Select(col => _dragonEnergyWords[rowCol * 5 + col])).ToList();
+        var badWords = _dragonEnergyWords.Except(goodWords).PickRandom();
+        var ix = Rnd.Range(0, 6);
+        goodWords.RemoveRange(5, goodWords.Count - 5);
+        goodWords.Insert(ix, badWords);
+        return new StageInfo
+        {
+            CorrectIndex = ix,
+            Setup = (m, i) => { m.setButtonImage(i, goodWords[i], m.DragonEnergyTextures); },
+            Logging = string.Format("Dragon Energy words from {0} {1} in the manual", isCol ? "column" : "row", rowCol + 1)
         };
     }
     #endregion

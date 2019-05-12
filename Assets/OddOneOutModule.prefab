@@ -747,6 +747,37 @@ MonoBehaviour:
   - {fileID: 2800000, guid: fe97e359148253148abceed03089150e, type: 3}
   - {fileID: 2800000, guid: eae5c20d40e33b74d9ed408f5ecacc6b, type: 3}
   - {fileID: 2800000, guid: aa81bc344e51b494a8471492776bba8c, type: 3}
+  DragonEnergyTextures:
+  - {fileID: 2800000, guid: 3b59dec75e4c88a4291255d084e5ad09, type: 3}
+  - {fileID: 2800000, guid: 40f21d0e714a3b242bed53fa7cbad1d3, type: 3}
+  - {fileID: 2800000, guid: 50aeeb8a3ce4b2d4a8c0e53a244af80a, type: 3}
+  - {fileID: 2800000, guid: b5cd8f91227e01d48a5ad98b674d6969, type: 3}
+  - {fileID: 2800000, guid: 0b2ea62ca930cc948b0ff69cf0920097, type: 3}
+  - {fileID: 2800000, guid: 3481a1a8eec24b146830a709e129cba0, type: 3}
+  - {fileID: 2800000, guid: 1d7f5d53d776b744389019e81218fb70, type: 3}
+  - {fileID: 2800000, guid: 4130ad523dbd6594eb312b37a4eb9f85, type: 3}
+  - {fileID: 2800000, guid: 9d242c86fa6720f4c8a92534d079d3b6, type: 3}
+  - {fileID: 2800000, guid: 996530b7d46039c43a36f4a3b0280f8f, type: 3}
+  - {fileID: 2800000, guid: 62503389fec086143a704c01c0a9f8cb, type: 3}
+  - {fileID: 2800000, guid: ee1459f7a61e4c040a74da6140d8f712, type: 3}
+  - {fileID: 2800000, guid: 3295c1f2fb080074cb2dc27a45984a67, type: 3}
+  - {fileID: 2800000, guid: bc290e0b33626ae43897a020b28f884d, type: 3}
+  - {fileID: 2800000, guid: 909072a72f5f7234cb77d40af9bb0177, type: 3}
+  - {fileID: 2800000, guid: 7f948f3836bfc1e4db30a2582f8abdc0, type: 3}
+  - {fileID: 2800000, guid: ce4617d0175c9a2469540474a4d03393, type: 3}
+  - {fileID: 2800000, guid: f8f5aea9bb6d2ab4e8e95da597da3f45, type: 3}
+  - {fileID: 2800000, guid: e058512d627df96408ffee5be8f5d0b7, type: 3}
+  - {fileID: 2800000, guid: 39428957302a48a4ea74b9bf726ddef2, type: 3}
+  - {fileID: 2800000, guid: a7b6206bf228d6943b607e395dc45cc7, type: 3}
+  - {fileID: 2800000, guid: 313aedfb3b09910409b035f7dffe9ff3, type: 3}
+  - {fileID: 2800000, guid: a13279462e3045240bf2d16713c4785a, type: 3}
+  - {fileID: 2800000, guid: b101ca7989e25bf4f961cb8695a3ee38, type: 3}
+  - {fileID: 2800000, guid: 95a503a7d1a035c468d25e4a1228f808, type: 3}
+  - {fileID: 2800000, guid: 25c8f431e1eb05c498e16ac84e5f925e, type: 3}
+  - {fileID: 2800000, guid: c7e94b91aa7afb1448f2566dc6d15c0a, type: 3}
+  - {fileID: 2800000, guid: d4cb9643849a0ba4198e228e97222c3d, type: 3}
+  - {fileID: 2800000, guid: d0a4f46dc15f3ac4cadfd5787a76e1b2, type: 3}
+  - {fileID: 2800000, guid: f7a720b00ceac2d498f4074583e1be3a, type: 3}
   StandardFont: {fileID: 12800000, guid: 468ef04a872286f41a72a1dc774a31fc, type: 3}
   ZoniFont: {fileID: 12800000, guid: 18e2f187c2719f04396fedf3d143cac6, type: 3}
   LombaxFont: {fileID: 12800000, guid: 5ac8f1b9cfc622e43ac9addeb8c1519f, type: 3}
