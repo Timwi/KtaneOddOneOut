@@ -1352,14 +1352,14 @@ public class OddOneOutModule : MonoBehaviour
 
     IEnumerator ProcessTwitchCommand(string command)
     {
-        if (command == "colorblind")
+        if (Regex.IsMatch(command, @"^\s*colorblind\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
             ColorblindIndicator.gameObject.SetActive(true);
             yield return null;
             yield break;
         }
 
-        if (command == "cycle")
+        if (Regex.IsMatch(command, @"^\s*cycle\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
             yield return null;
 
