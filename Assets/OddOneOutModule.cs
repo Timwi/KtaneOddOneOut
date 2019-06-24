@@ -559,7 +559,7 @@ public class OddOneOutModule : MonoBehaviour
         tryAgain:
         var isCol = Rnd.Range(0, 2) != 0;
         var rowCol = isCol ? new[] { 0, 1, 2, 12, 13, 14, 15, 16, 17 }.PickRandom() : Rnd.Range(0, _periodicTable.Length);
-        var goodSymbols = (isCol ? Enumerable.Range(0, _periodicTable.Length).Select(row => _periodicTable[row][rowCol]) : _periodicTable[rowCol]).Where(sy => sy != "").ToList();
+        var goodSymbols = (isCol ? Enumerable.Range(0, _periodicTable.Length).Select(row => _periodicTable[row][rowCol]) : _periodicTable[rowCol]).Where(sy => sy != "").ToList().Shuffle();
         if (goodSymbols.Count < 5)
             goto tryAgain;
         var badSymbol = _periodicTable.SelectMany(s => s).Where(sy => sy != "" && !goodSymbols.Contains(sy)).PickRandom();
@@ -977,7 +977,7 @@ public class OddOneOutModule : MonoBehaviour
     {
         var isCol = Rnd.Range(0, 2) != 0;
         var rowCol = Rnd.Range(0, isCol ? 5 : 6);
-        var goodWords = (isCol ? Enumerable.Range(0, 6).Select(row => _dragonEnergyWords[row * 5 + rowCol]) : Enumerable.Range(0, 5).Select(col => _dragonEnergyWords[rowCol * 5 + col])).ToList();
+        var goodWords = (isCol ? Enumerable.Range(0, 6).Select(row => _dragonEnergyWords[row * 5 + rowCol]) : Enumerable.Range(0, 5).Select(col => _dragonEnergyWords[rowCol * 5 + col])).ToList().Shuffle();
         var badWords = _dragonEnergyWords.Except(goodWords).PickRandom();
         var ix = Rnd.Range(0, 6);
         goodWords.RemoveRange(5, goodWords.Count - 5);
