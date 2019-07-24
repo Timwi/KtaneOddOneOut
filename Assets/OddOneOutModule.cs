@@ -775,7 +775,10 @@ public class OddOneOutModule : MonoBehaviour
         var w = _benedictHeadings.Length;
         var coords = Enumerable.Range(0, w * _benedictTable.Length).ToList().Shuffle().Take(6).ToList();
         var ix = Rnd.Range(0, 6);
-        var badHeading = Enumerable.Range(0, w).Where(i => i != coords[ix] % w).PickRandom();
+        var badHeading = Enumerable.Range(0, w)
+            // Prevent other headings where the same word is still valid
+            .Except(Enumerable.Range(0, _benedictTable.Length * w).Where(i => _benedictTable[i / w][i % w] == _benedictTable[coords[ix] / w][coords[ix] % w]).Select(i => i % w))
+            .PickRandom();
         return new StageInfo
         {
             CorrectIndex = ix,
