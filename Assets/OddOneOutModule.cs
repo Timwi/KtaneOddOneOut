@@ -28,6 +28,7 @@ public class OddOneOutModule : MonoBehaviour
     public MeshRenderer[] Leds;
     public Material LedOn;
     public Material LedOff;
+    public Material LedOnRed;   // to indicate reset
     public TextMesh ColorblindIndicator;
 
     public MeshRenderer LedPuzzleIndicator;
@@ -61,6 +62,9 @@ public class OddOneOutModule : MonoBehaviour
     private readonly string[] _showOnHover = new string[6];
     private Coroutine _curCoroutine;
     private int _puzzleLedColor;
+
+    private Coroutine _longPressCoroutine;
+    private bool _longPress;
 
     private static int _moduleIdCounter = 1;
     private int _moduleId;
@@ -1217,7 +1221,8 @@ public class OddOneOutModule : MonoBehaviour
 
         for (int i = 0; i < Buttons.Length; i++)
         {
-            Buttons[i].OnInteract = pressed(i);
+            Buttons[i].OnInteract = pressedDown(i);
+            Buttons[i].OnInteractEnded = pressedUp(i);
             Buttons[i].OnHighlight = setHover(i);
             Buttons[i].OnHighlightEnded = delegate { _curHover = null; Display.text = ""; };
         }
@@ -1324,33 +1329,72 @@ public class OddOneOutModule : MonoBehaviour
         ColorblindIndicator.text = _puzzleLedColor == 0 ? "" : "RYGTBPI".Substring(_puzzleLedColor - 1, 1);
     }
 
-    private KMSelectable.OnInteractHandler pressed(int i)
+    private KMSelectable.OnInteractHandler pressedDown(int i)
     {
         return delegate
         {
             Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, Buttons[i].transform);
             Buttons[i].AddInteractionPunch();
+            if (_longPressCoroutine != null)
+            {
+                StopCoroutine(_longPressCoroutine);
+                _longPressCoroutine = null;
+            }
 
             if (_curStage >= 6) // module is solved
                 return false;
 
+            _longPressCoroutine = StartCoroutine(handleLongPress(Buttons[i].transform));
+            return false;
+        };
+    }
+
+    private IEnumerator handleLongPress(Transform btn)
+    {
+        _longPress = false;
+        yield return new WaitForSeconds(.5f);
+        Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonRelease, btn);
+        _longPress = true;
+        for (int i = 0; i < 5; i++)
+            Leds[i].sharedMaterial = LedOnRed;
+    }
+
+    private Action pressedUp(int i)
+    {
+        return delegate
+        {
+            if (_longPressCoroutine != null)
+            {
+                StopCoroutine(_longPressCoroutine);
+                _longPressCoroutine = null;
+            }
             if (_curCoroutine != null)
+            {
                 StopCoroutine(_curCoroutine);
-            if (i == _stages[_curStage].CorrectIndex)
+                _curCoroutine = null;
+            }
+
+            if (_curStage >= 6) // module is solved
+                return;
+
+            if (_longPress)
+            {
+                Debug.LogFormat(@"[Odd One Out #{0}] Module reset.", _moduleId);
+                SetStage(0);
+            }
+            else if (i == _stages[_curStage].CorrectIndex)
                 SetStage(_curStage + 1);
             else
             {
                 Module.HandleStrike();
                 SetStage(0);
             }
-
-            return false;
         };
     }
 
 
 #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"!{0} press 1 [number in reading order] | !{0} press TL [TL, TM, TR, BL, BM, BR] | !{0} cycle | !{0} colorblind";
+    private readonly string TwitchHelpMessage = @"!{0} press 1 [number in reading order] | !{0} press TL [TL, TM, TR, BL, BM, BR] | !{0} cycle | !{0} reset | !{0} colorblind";
 #pragma warning restore 414
 
     IEnumerator ProcessTwitchCommand(string command)
@@ -1359,6 +1403,15 @@ public class OddOneOutModule : MonoBehaviour
         {
             ColorblindIndicator.gameObject.SetActive(true);
             yield return null;
+            yield break;
+        }
+
+        if (Regex.IsMatch(command, @"^\s*reset\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            yield return Buttons[0];
+            yield return new WaitForSeconds(.8f);
+            yield return Buttons[0];
             yield break;
         }
 
@@ -1401,12 +1454,12 @@ public class OddOneOutModule : MonoBehaviour
         yield return null;
         switch (match.Groups[1].Value.ToLowerInvariant())
         {
-            case "1": case "tl": case "lt": Buttons[0].OnInteract(); break;
-            case "2": case "tm": case "mt": case "tc": case "ct": Buttons[1].OnInteract(); break;
-            case "3": case "tr": case "rt": Buttons[2].OnInteract(); break;
-            case "4": case "bl": case "lb": Buttons[3].OnInteract(); break;
-            case "5": case "bm": case "mb": case "bc": case "cb": Buttons[4].OnInteract(); break;
-            case "6": case "br": case "rb": Buttons[5].OnInteract(); break;
+            case "1": case "tl": case "lt": yield return new[] { Buttons[0] }; break;
+            case "2": case "tm": case "mt": case "tc": case "ct": yield return new[] { Buttons[1] }; break;
+            case "3": case "tr": case "rt": yield return new[] { Buttons[2] }; break;
+            case "4": case "bl": case "lb": yield return new[] { Buttons[3] }; break;
+            case "5": case "bm": case "mb": case "bc": case "cb": yield return new[] { Buttons[4] }; break;
+            case "6": case "br": case "rb": yield return new[] { Buttons[5] }; break;
         }
     }
 }

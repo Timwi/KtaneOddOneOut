@@ -311,6 +311,7 @@ MonoBehaviour:
   - {fileID: 23825926432387348}
   LedOn: {fileID: 2100000, guid: fd4e658c2a87d6147a9ffdd54ca0e4e8, type: 2}
   LedOff: {fileID: 2100000, guid: 5b9f8a96000d4ee488768de062b55780, type: 2}
+  LedOnRed: {fileID: 2100000, guid: b947f1a8f4bf31745ac4572e6aeac7a9, type: 2}
   ColorblindIndicator: {fileID: 102197549078961346}
   LedPuzzleIndicator: {fileID: 23095228761588588}
   PuzzleIndicatorColors:
