@@ -941,7 +941,7 @@ public class OddOneOutModule : MonoBehaviour
 
         var goodAnimals = inf.Line.Select(hex => _zooAnimals[hex]).ToList().Shuffle();
         var ix = Rnd.Range(0, 6);
-        goodAnimals.Insert(ix, _zooAnimals.Where(kvp => kvp.Key != inf.StartHex + 6 * Hex.GetDirection(inf.Direction) && kvp.Key != inf.StartHex - Hex.GetDirection(inf.Direction) && !inf.Line.Contains(kvp.Key)).PickRandom().Value);
+        goodAnimals.Insert(ix, _zooAnimals.Where(kvp => kvp.Key != inf.StartHex + 5 * Hex.GetDirection(inf.Direction) && kvp.Key != inf.StartHex - Hex.GetDirection(inf.Direction) && !inf.Line.Contains(kvp.Key)).PickRandom().Value);
         return new StageInfo
         {
             CorrectIndex = ix,
