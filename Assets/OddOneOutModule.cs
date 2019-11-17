@@ -176,7 +176,7 @@ public class OddOneOutModule : MonoBehaviour
     private static readonly string[] _ikeaBrands = @"Känga,Skål,Godis,Ost,Färg,Drake,Hörlurar,Köttbulle,Åttahörning,Måla,Valp,Tvättbjörn,Skjorta,Sko,Enhörning,Trollkarl".Split(',');
 
     private sealed class Lion { public string Name; public int AliveFrom; public int AliveUntil; }
-    private static readonly Lion[] _lionsShareLions = @"Taka,2,11;Mufasa,1,5;Uru,1,6;Ahadi,1,4;Zama,1,3;Mohatu,1,2;Kion,13,16;Kiara,12,16;Kopa,12,13;Kovu,11,16;Vitani,10,16;Nuka,9,13;Mheetu,6,16;Zira,6,13;Nala,5,16;Simba,4,15;Sarabi,1,14;Sarafina,1,12"
+    private static readonly Lion[] _lionsShareLions = @"Taka,2,11;Mufasa,1,5;Uru,1,6;Ahadi,1,3;Zama,1,4;Mohatu,1,2;Kion,13,16;Kiara,12,16;Kopa,12,13;Kovu,11,16;Vitani,10,16;Nuka,9,13;Mheetu,6,16;Zira,6,13;Nala,5,16;Simba,4,15;Sarabi,1,14;Sarafina,1,12"
         .Split(';').Select(l => l.Split(',')).Select(arr => new Lion { Name = arr[0], AliveFrom = int.Parse(arr[1]), AliveUntil = int.Parse(arr[2]) }).ToArray();
 
     private static readonly int[] _primes = new[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97 };
@@ -366,7 +366,7 @@ public class OddOneOutModule : MonoBehaviour
             var badTarget = Enumerable.Range(0, (useDots ? _zoniDotNumbers : _zoniDashNumbers).Count).Where(i => i != targetIx && (useDots ? _zoniDotNumbers : _zoniDashNumbers)[i].Count > 0).PickRandom();
             var ix = Rnd.Range(0, 6);
             numbers.Insert(ix, (useDots ? _zoniDotNumbers : _zoniDashNumbers)[badTarget].PickRandom());
-            if (!isValidNumberOfDigitsPuzzle(numbers) && !isValidModuloPuzzle(numbers))
+            if (!isValidZoniPuzzle(numbers, !useDots) && !isValidNumberOfDigitsPuzzle(numbers) && !isValidModuloPuzzle(numbers))
                 return new StageInfo
                 {
                     CorrectIndex = ix,
@@ -1186,9 +1186,9 @@ public class OddOneOutModule : MonoBehaviour
             (numbers.Count(n => n >= 10 && n < 100) == 1 && numbers.Count(n => n < 10) == 5);
     }
 
-    private static bool isValidZoniPuzzle(List<int> numbers)
+    private static bool isValidZoniPuzzle(List<int> numbers, bool? checkOnlyDots = null)
     {
-        foreach (var set in _zoniDotNumbers.Concat(_zoniDashNumbers))
+        foreach (var set in checkOnlyDots == true ? _zoniDotNumbers : checkOnlyDots == false ? _zoniDashNumbers : _zoniDotNumbers.Concat(_zoniDashNumbers))
             if (numbers.Count(n => set.Contains(n)) == 5)
                 return true;
         return false;
