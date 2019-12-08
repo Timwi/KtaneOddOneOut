@@ -95,7 +95,6 @@ public class OddOneOutModule : MonoBehaviour
     private static readonly string[] _countryNames = @"Afghanistan;Albania;Algeria;Andorra;Angola;Antigua and Barbuda;Argentina;Armenia;Australia;Austria;Azerbaijan;Bahamas;Bangladesh;Barbados;Belarus;Belgium;Belize;Benin;Bhutan;Bolivia;Bosnia and Herzegovina;Botswana;Brazil;Brunei;Bulgaria;Burkina Faso;Burundi;Cabo Verde;Cambodia;Cameroon;Canada;Central African Republic;Chad;Chile;China;Colombia;Comoros;Republic of the Congo;Costa Rica;Côte d’Ivoire;Croatia;Cuba;Cyprus;Czech Republic;North Korea;Democratic Republic of the Congo;Denmark;Djibouti;Dominica;Dominican Republic;Ecuador;Egypt;El Salvador;Equatorial Guinea;Eritrea;Estonia;Eswatini;Ethiopia;Fiji;Finland;France;Gabon;The Gambia;Georgia;Germany;Ghana;Greece;Grenada;Guatemala;Guinea;Guinea-Bissau;Guyana;Haiti;Honduras;Hungary;Iceland;India;Iran;Iraq;Ireland;Israel;Italy;Jamaica;Japan;Jordan;Kazakhstan;Kenya;Kiribati;Kuwait;Kyrgyzstan;Laos;Latvia;Lebanon;Lesotho;Liberia;Libya;Liechtenstein;Lithuania;Luxembourg;Madagascar;Malawi;Malaysia;Maldives;Mali;Malta;Marshall Islands;Mauritania;Mauritius;Mexico;Federated States of Micronesia;Mongolia;Montenegro;Morocco;Mozambique;Myanmar;Namibia;Nauru;Nepal;Netherlands;New Zealand;Nicaragua;Niger;Nigeria;North Macedonia;Norway;Oman;Pakistan;Palau;Panama;Papua New Guinea;Paraguay;Peru;Philippines;Poland;Portugal;South Korea;Moldova;Romania;Russia;Rwanda;Saint Kitts and Nevis;Saint Lucia;Saint Vincent and the Grenadines;Samoa;San Marino;São Tomé and Príncipe;Saudi Arabia;Senegal;Serbia;Seychelles;Sierra Leone;Singapore;Slovakia;Slovenia;Solomon Islands;Somalia;South Africa;South Sudan;Spain;Sri Lanka;Sudan;Suriname;Sweden;Switzerland;Syria;Tajikistan;Thailand;Timor-Leste;Togo;Tonga;Trinidad and Tobago;Tunisia;Turkey;Turkmenistan;Tuvalu;Uganda;Ukraine;United Arab Emirates;United Kingdom;Tanzania;United States;Uruguay;Uzbekistan;Vanuatu;Venezuela;Vietnam;Yemen;Zambia;Zimbabwe".Split(';');
     private static readonly GroupInfo<string>[][] _countryNameGroups;
     private static readonly string[][] _noteNames = @"C,C♯/D♭,D,D♯/E♭,E,F,F♯/G♭,G,G♯/A♭,A,A♯/B♭,B".Split(',').Select(str => str.Split('/')).ToArray();
-    private static readonly string[] _companyCodes = @"ADM;CNA;GSK;HSB;IMB;MKS;NXT;QLT;RMG;SVT;TUI;VOD".Split(';');
     private static readonly string[] _morseWarCodes = @"ABR;RBS;SVR;ZUX;ZAQ;MOI;OPA;VZQ;XRP;OLL;AIR;RHG;MJN;VTT;XZS;SUN".Split(';');
 
     private static readonly string[] _wordsModules = "Password,Extended Password,Poetry,Tap Code,Braille,Word Search,Anagrams,Word Scramble".Split(',');
@@ -314,7 +313,7 @@ public class OddOneOutModule : MonoBehaviour
         () => new Func<StageInfo>[] { LetterDistancePuzzle, LetterAtbashRot13Puzzle, LetterMorsePuzzle, LetterMaritimeFlagPuzzle, LetterSemaphorePuzzle, LetterPigpenPuzzle }.PickRandom()(),
 
         // LETTER CODES
-        () => new Func<StageInfo>[] { FakeChemicalElementPuzzle, ChemicalElementRowColumnPuzzle, USStateAbbreviationsPuzzle, CountryISOCodesPuzzle, CurrencyISOCodesPuzzle, MorseWarPuzzle, StockMarketPuzzle }.PickRandom()(),
+        () => new Func<StageInfo>[] { FakeChemicalElementPuzzle, ChemicalElementRowColumnPuzzle, USStateAbbreviationsPuzzle, CountryISOCodesPuzzle, CurrencyISOCodesPuzzle, MorseWarPuzzle }.PickRandom()(),
 
         // ENCODED LETTERS
         EncodedLettersPuzzle,
@@ -592,7 +591,7 @@ public class OddOneOutModule : MonoBehaviour
             var ix = Rnd.Range(0, 6);
             goodCodes.RemoveRange(5, goodCodes.Count - 5);
             goodCodes.Insert(ix, badCode);
-            if (!isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _companyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
+            if (!isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
                 return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = string.Format("ISO codes of countries in “Flags”") };
         }
     }
@@ -606,7 +605,7 @@ public class OddOneOutModule : MonoBehaviour
             var ix = Rnd.Range(0, 6);
             goodCodes.RemoveRange(5, goodCodes.Count - 5);
             goodCodes.Insert(ix, badCode);
-            if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _companyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
+            if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
                 return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = string.Format("ISO codes of currencies in “Flags” and “Foreign Exchange Rates”") };
         }
     }
@@ -620,22 +619,8 @@ public class OddOneOutModule : MonoBehaviour
             var ix = Rnd.Range(0, 6);
             goodCodes.RemoveRange(5, goodCodes.Count - 5);
             goodCodes.Insert(ix, badCode);
-            if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _companyCodes))
+            if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _currencyCodes))
                 return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = string.Format("Codes from “Morse War”") };
-        }
-    }
-    private static StageInfo StockMarketPuzzle()
-    {
-        while (true)
-        {
-            var goodCodes = _companyCodes.ToList().Shuffle();
-            string badCode;
-            do { badCode = (char) ('A' + Rnd.Range(0, 26)) + "" + (char) ('A' + Rnd.Range(0, 26)) + (char) ('A' + Rnd.Range(0, 26)); } while (goodCodes.Contains(badCode));
-            var ix = Rnd.Range(0, 6);
-            goodCodes.RemoveRange(5, goodCodes.Count - 5);
-            goodCodes.Insert(ix, badCode);
-            if (!isValidCodePuzzle(goodCodes, _countryCodes) && !isValidCodePuzzle(goodCodes, _currencyCodes) && !isValidCodePuzzle(goodCodes, _morseWarCodes))
-                return new StageInfo { CorrectIndex = ix, Setup = (m, i) => { m.setOnHover(i, goodCodes[i]); }, Logging = string.Format("Company codes from “Stock Market”") };
         }
     }
     private static StageInfo EncodedLettersPuzzle()
