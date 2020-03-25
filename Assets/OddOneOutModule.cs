@@ -116,8 +116,10 @@ public class OddOneOutModule : MonoBehaviour
         // Word Scramble
         "archer;attack;banana;blasts;bursts;button;cannon;casing;charge;damage;defuse;device;disarm;flames;kaboom;kevlar;keypad;letter;module;mortar;napalm;ottawa;person;robots;rocket;sapper;semtex;weapon;widget;wiring".Split(';'));
 
-    private static readonly string[] _namesModules = "Human Resources,Ice Cream,Identity Parade,Mafia,Retirement,Schlag den Bomb,Subways".Split(',');
+    private static readonly string[] _namesModules = "Boxing,Human Resources,Ice Cream,Identity Parade,Mafia,Retirement,Schlag den Bomb,Subways".Split(',');
     private static readonly string[][] _names = newArray(
+        // Boxing
+        "Muhammad;Mike;Floyd;Joe;George;Manny;Sugary Ray;Evander;Oscar;Roberto;Jack;Marvin;Rocky;Lennox;Thomas;Sonny;Julio;Roy;Larry;Archie;Jake;Bernard;Gene;Ken;Wladimir".Split(';'),
         // Human Resources
         "Rebecca;Damian;Jean;Mike;River;Samuel;Yoshi;Caleb;Ashley;Tim;Eliott;Ursula;Silas;Noah;Quinn;Dylan".Split(';'),
         // Ice Cream
