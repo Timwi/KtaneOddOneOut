@@ -97,7 +97,7 @@ public class OddOneOutModule : MonoBehaviour
     private static readonly string[][] _noteNames = @"C,C♯/D♭,D,D♯/E♭,E,F,F♯/G♭,G,G♯/A♭,A,A♯/B♭,B".Split(',').Select(str => str.Split('/')).ToArray();
     private static readonly string[] _morseWarCodes = @"ABR;RBS;SVR;ZUX;ZAQ;MOI;OPA;VZQ;XRP;OLL;AIR;RHG;MJN;VTT;XZS;SUN".Split(';');
 
-    private static readonly string[] _wordsModules = "Password,Extended Password,Poetry,Tap Code,Braille,Word Search,Anagrams,Word Scramble".Split(',');
+    private static readonly string[] _wordsModules = "Password,Extended Password,Poetry,Tap Code,Braille,Word Search,Anagrams,Word Scramble,Double Expert".Split(',');
     private static readonly string[][] _words = newArray(
         // Password
         "about;after;again;below;could;every;first;found;great;house;large;learn;never;other;place;plant;point;right;small;sound;spell;still;study;their;there;these;thing;think;three;water;where;which;world;would;write".Split(';'),
@@ -114,7 +114,9 @@ public class OddOneOutModule : MonoBehaviour
         // Anagrams
         "stream;master;tamers;looped;poodle;pooled;cellar;caller;recall;seated;sedate;teased;rescue;secure;recuse;rashes;shears;shares;barely;barley;bleary;duster;rusted;rudest".Split(';'),
         // Word Scramble
-        "archer;attack;banana;blasts;bursts;button;cannon;casing;charge;damage;defuse;device;disarm;flames;kaboom;kevlar;keypad;letter;module;mortar;napalm;ottawa;person;robots;rocket;sapper;semtex;weapon;widget;wiring".Split(';'));
+        "archer;attack;banana;blasts;bursts;button;cannon;casing;charge;damage;defuse;device;disarm;flames;kaboom;kevlar;keypad;letter;module;mortar;napalm;ottawa;person;robots;rocket;sapper;semtex;weapon;widget;wiring".Split(';'),
+        // Double Expert
+        "apple;delta;greek;juliett;maniac;papa;single;victor;x-ray;ymca;zulu;alpha;diamond;golf;jenga;mike;pope;sierra;vow;xbox;yo-yo;zebra;banana;echo;hawaii;kilo;nutmeg;quebec;triple;violet;x-file;ygor;zapra;beta;emerald;hotel;kenya;november;quiet;tango;vent gas;xcitebike;yeet;zebstrika;cherry;foxtrot;indigo;lima;otto;romeo;ultimate;whiskey;x-men;yippy;zenoblade;back;define;high;jackal;monsplode;quiper;stunt;words;zenoblade;yovile;zen mode;cabin;fedex;gothi;kojima;nominate;prequire;tuesday;wii;x01;yankee;zoo".Split(';'));
 
     private static readonly string[] _namesModules = "Boxing,Human Resources,Ice Cream,Identity Parade,Mafia,Retirement,Schlag den Bomb,Subways".Split(',');
     private static readonly string[][] _names = newArray(
