@@ -97,7 +97,7 @@ public class OddOneOutModule : MonoBehaviour
     private static readonly string[][] _noteNames = @"C,C♯/D♭,D,D♯/E♭,E,F,F♯/G♭,G,G♯/A♭,A,A♯/B♭,B".Split(',').Select(str => str.Split('/')).ToArray();
     private static readonly string[] _morseWarCodes = @"ABR;RBS;SVR;ZUX;ZAQ;MOI;OPA;VZQ;XRP;OLL;AIR;RHG;MJN;VTT;XZS;SUN".Split(';');
 
-    private static readonly string[] _wordsModules = "Password,Extended Password,Poetry,Tap Code,Braille,Word Search,Anagrams,Word Scramble,Double Expert".Split(',');
+    private static readonly string[] _wordsModules = "Password,Extended Password,Poetry,Tap Code,Braille,Word Search,Anagrams,Word Scramble,Double Expert,Topsy Turvy,Not Wiresword,Codenames".Split(',');
     private static readonly string[][] _words = newArray(
         // Password
         "about;after;again;below;could;every;first;found;great;house;large;learn;never;other;place;plant;point;right;small;sound;spell;still;study;their;there;these;thing;think;three;water;where;which;world;would;write".Split(';'),
@@ -116,12 +116,20 @@ public class OddOneOutModule : MonoBehaviour
         // Word Scramble
         "archer;attack;banana;blasts;bursts;button;cannon;casing;charge;damage;defuse;device;disarm;flames;kaboom;kevlar;keypad;letter;module;mortar;napalm;ottawa;person;robots;rocket;sapper;semtex;weapon;widget;wiring".Split(';'),
         // Double Expert
-        "apple;delta;greek;juliett;maniac;papa;single;victor;x-ray;ymca;zulu;alpha;diamond;golf;jenga;mike;pope;sierra;vow;xbox;yo-yo;zebra;banana;echo;hawaii;kilo;nutmeg;quebec;triple;violet;x-file;ygor;zapra;beta;emerald;hotel;kenya;november;quiet;tango;vent gas;xcitebike;yeet;zebstrika;cherry;foxtrot;indigo;lima;otto;romeo;ultimate;whiskey;x-men;yippy;zenoblade;back;define;high;jackal;monsplode;quiper;stunt;words;zenoblade;yovile;zen mode;cabin;fedex;gothi;kojima;nominate;prequire;tuesday;wii;x01;yankee;zoo".Split(';'));
+        "apple;delta;greek;juliett;maniac;papa;single;victor;x-ray;ymca;zulu;alpha;diamond;golf;jenga;mike;pope;sierra;vow;xbox;yo-yo;zebra;banana;echo;hawaii;kilo;nutmeg;quebec;triple;violet;x-file;ygor;zapra;beta;emerald;hotel;kenya;november;quiet;tango;vent gas;xcitebike;yeet;zebstrika;cherry;foxtrot;indigo;lima;otto;romeo;ultimate;whiskey;x-men;yippy;zenoblade;back;define;high;jackal;monsplode;quiper;stunt;words;zenoblade;yovile;zen mode;cabin;fedex;gothi;kojima;nominate;prequire;tuesday;wii;x01;yankee;zoo".Split(';'),
+        // Topsy Turvy
+        "topsy;robot;cloud;round;quilt;found;plaid;curve;water;ovals;verse;sandy;frown;windy;curse;ghost".Split(';'),
+        // Not Wiresword
+        "almost;answer;around;assert;bother;bundle;cancel;choose;course;demand;easily;expert;facade;family;faulty;health;hollow;inform;inject;insert;inside;jacket;jockey;kindly;ladder;latent;magnet;manual;market;nickel;notice;number;occult;octave;paddle;parent;parsec;patent;person;policy;public;racket;random;search;second;should;tackle;tangle;topple;tricky;undone;unisex;verbal;victor;within;worded".Split(';'),
+        // Codenames
+        "snowflake;icicle;zamboni;snowman;chilled;igloo;aurora;sleet;hypothermia;freeze;hyperborean;slush;winter;december;arctic;kitchen;dinner;lunch;breakfast;mcdonalds;carrot;toaster;microwave;butcher;bodega;meat;candy;boiling;blender;cleaver;bomb;wires;button;keypad;memory;sequence;morse;alarm clock;binder;casing;symbols;expert;defuser;manual;twitch;jigsaw;hunt;crossword;cryptic;sudoku;hint;solution;erratum;answer;index;encode;cipher;meta;logic;shikaku;accent;dialect;dictionary;diacritic;translate;lexicon;letter;alphabet;glyph;understand;localize;etymology;semantics;grammar;word;ocean;ship;navy;sails;compass;map;treasure;pirate;sailor;captain;shanty;seven seas;fishing;cruise;landlubber;console;controller;character;fighting;platform;pixels;plumber;handheld;pc;steam;virtual;keyboard;headset;mouse;remote;grass;tree;flower;greenhouse;bush;bark;roots;leaves;stick;wood;cotton;petal;pollen;berry;vine;melody;song;beat;rhythm;hip hop;rockstar;band;instrument;notes;sheet;tune;percussion;guitar;chord;interval;number;calculator;plus;graph;calculus;negative;modulo;division;zero;matrix;gradient;voronoi;euler;integer;geometry;war;battle;leader;country;nation;empire;conquer;diplomat;king;revolution;culture;age;artifact;figurehead;document;arm;leg;hand;head;hair;torso;elbow;finger;heart;brain;knee;foot;toe;hips;weenus;party;election;vote;caucus;congress;senate;president;branch;balance;bill;partisanship;debate;speech;judge;mayor;ball;racket;base;helmet;coach;team;referee;athlete;basket;penalty;kick;throw;net;field;stadium;card;dice;board;deck;token;meeple;tile;roll;draw;suit;jack;yahtzee;checkers;monopoly;chess".Split(';'));
 
-    private static readonly string[] _namesModules = "Boxing,Human Resources,Ice Cream,Identity Parade,Mafia,Retirement,Schlag den Bomb,Subways".Split(',');
+    private static readonly string[] _namesModules = "Boxing,Guess Who?,Human Resources,Ice Cream,Identity Parade,Mafia,Naughty or Nice,Raiding Temples,Retirement,Schlag den Bomb,Subways".Split(',');
     private static readonly string[][] _names = newArray(
         // Boxing
         "Muhammad;Mike;Floyd;Joe;George;Manny;Sugary Ray;Evander;Oscar;Roberto;Jack;Marvin;Rocky;Lennox;Thomas;Sonny;Julio;Roy;Larry;Archie;Jake;Bernard;Gene;Ken;Wladimir".Split(';'),
+        // Guess Who?
+        "Aaron;Albin;Andre;Audie;Aydan;Brock;Billy;Brent;Bryce;Butch;Chris;Chuck;Clide;Cliff;Colby;David;Derek;Devon;Drake;Dylon;Edgar;Elias;Elroy;Elvis;Emmet;Felix;Flint;Flynn;Frank;Fritz;Garey;Greye;Gavin;Geoff;Gregg;Howie;Henry;Heath;Harry;Homer;Isaac;Isiah;Isham;Irvin;Isaak;Jacky;Jakob;Jamil;James;Jared;Kadyn;Kenji;Kevin;Kieth;Kraig;Lamar;Larry;Lloyd;Logan;Lonny;Marco;Micah;Micky;Mikal;Mitch;Nipal;Nikko;Nixon;North;Nolan;Oscar;Owenn;Orris;Orvil;Oddie;Pablo;Pedro;Peter;Perry;Price;Quint;Quinn;Quill;Quiet;Quick;Ryder;Romeo;River;Rocky;Ralph;Storm;Steve;Scott;Shaun;Simon;Trent;Tyson;Tyler;Timmy;Tommy;Uncle;Unlit;Urban;Uriah;Urnas;Vince;Virge;Vance;Vidal;Verne;Waldo;Wally;Wayde;Woody;Wyatt;Xylla;Xynpa;Xaker;Yahir;Yusef;Yltim;Yvale;Yverm;Zarek;Zethe;Zkutt;Zymon;Zteev;Abbie;Agnes;Alexa;Ariel;Ashly;Becky;Belle;Bonny;Brook;Bulah;Carie;Casey;Cecil;Cindi;Coral;Daisy;Debbi;Doris;Diana;Delle;Edith;Elena;Elisa;Ellen;Ethyl;Fiona;Faith;Flora;Freya;Frona;Giana;Gilda;Grace;Glenn;Greta;Haley;Hanna;Hazel;Helen;Holly;Idell;India;Ivory;Irene;Itzel;Jesse;Julie;Jaden;Jewel;Jenna;Karen;Karma;Kelly;Kelsy;Katie;Lexis;Lynda;Layla;Lacie;Lucia;Merri;Mindy;Megan;Misty;Molly;Nancy;Naomi;Nokia;Norma;Norpy;Olive;Olina;Oleta;Orpha;Oprah;Paige;Phebe;Penny;Paola;Pearl;Qiana;Queen;Qatar;Qubec;Qyfer;Rikki;Rhoda;Ruthe;Robyn;Renae;Sally;Shona;Sinda;Syndi;Sylva;Trixy;Tanya;Terri;Texas;Trudi;Ursla;Umber;Urkel;Usnoo;Usnee;Venus;Vicky;Velma;Viola;Verde;Wanda;Wendy;Windy;Wisky;Wilta;Xokra;Xarly;Xymph;Yvett;Yetta;Yanky;Yedna;Yorda;Zohee;Zemfy;Zorka;Zanky;Zonka".Split(';'),
         // Human Resources
         "Rebecca;Damian;Jean;Mike;River;Samuel;Yoshi;Caleb;Ashley;Tim;Eliott;Ursula;Silas;Noah;Quinn;Dylan".Split(';'),
         // Ice Cream
@@ -130,6 +138,10 @@ public class OddOneOutModule : MonoBehaviour
         "Andy;Ben;Chrissie;Dylan;Eddie;Fiona;Gemma;Harriet;Ian;James;Kayleigh;Louise;Megan;Nate;Oscar;Penny;Quentin;Rhiannon".Split(';'),
         // Mafia
         "Rob;Tim;Mary;Briane;Hunter;Macy;John;Will;Lacy;Claire;Kenny;Rick;Walter;Bonnie;Luke;Bill;Sarah;Larry;Kate;Stacy;Diane;Mac;Jim;Clyde;Tommy;Lenny;Molly;Benny;Phil;Bob;Gary;Ted;Kim;Nate;Cher;Ron;Thomas;Sam;Duke;Jack;Ed;Ronny;Terry;Claira;Nick;Cob;Ash;Don;Jerry;Simon".Split(';'),
+        // Naughty or Nice
+        "Adam;Alice;Bob;Cheryl;Dave;George;Harry;James;Jason;John;Mike;Nancy;Pat;Rock;Sam;Simon;Tim;Tony".Split(';'),
+        // Raiding Temples
+        "Indiana;Francis;Robert;Clara;Sandy;Nate;Allan;Carlos;Shelley;Michael;Trini".Split(';'),
         // Retirement
         "Eliza;Marg;Ruth;Sandi;Toni;Amie;Ben;Dave;Janet;John;Kirsty;Kris;Lucy;Mark;Sal;Frank;Jane;Lydia;Mike;Pat;Skye;Toby".Split(';'),
         // Schlag den Bomb
@@ -137,12 +149,14 @@ public class OddOneOutModule : MonoBehaviour
         // Subways
         "Bryan;John;Mike;Emily;Mary;Katie".Split(';'));
 
-    private static readonly string[] _groceryModules = "Cheap Checkout,Grocery Store".Split(',');
+    private static readonly string[] _groceryModules = "Cheap Checkout,Grocery Store,Ingredients".Split(',');
     private static readonly string[][] _groceryItems = newArray(
         // Cheap Checkout
         "bananas;broccoli;candy canes;canola oil;cereal;cheese;chicken;chocolate bar;chocolate milk;coffee beans;cookies;deodorant;fruit punch;grape jelly;grapefruit;gum;honey;mints;mustard;oranges;paper towels;pasta sauce;peanut butter;pork;potato chips;potatoes;shampoo;socks;soda;spaghetti;steak;sugar;tea;tissues;ketchup;lemons;lettuce;lollipops;lotion;mayonnaise;tomatoes;toothpaste;turkey;water bottles;white bread;white milk".Split(';'),
         // Grocery Store
-        "apples;bananas;bottled water;bread;butter;candy;cat food;cheese;coffee;cookies;detergent;eggs;flour;glass cleaner;hot sauce;jelly;lettuce;milk;paper towels;peanut butter;pepper;pork;potatoes;salt;sausage;soda;soup;steak;sugar;toilet paper;tomatoes;toothpaste;turkey".Split(';'));
+        "apples;bananas;bottled water;bread;butter;candy;cat food;cheese;coffee;cookies;detergent;eggs;flour;glass cleaner;hot sauce;jelly;lettuce;milk;paper towels;peanut butter;pepper;pork;potatoes;salt;sausage;soda;soup;steak;sugar;toilet paper;tomatoes;toothpaste;turkey".Split(';'),
+        // Ingredients
+        "veal;beef;quail;filet mignon;crab;scallop;lobster;sole;eel;sea bass;mussel;cod;pumpkin;zucchini;onion;tomato;eggplant;carrot;garlic;celery;morel;porcini;chanterelle;portobello;black truffle;king oyster mushroom;black trumpet;miller mushroom;cloves;rosemary;thyme;bay leaf;basil;dill;parsley;saffron;apricot;gooseberry;lemon;orange;raspberry;pear;blackberry;apple;cheese;chocolate;caviar;butter;olive oil;cornichon;rice;honey;sour cherry;strawberry;blood orange;banana;grapes;melon;watermelon".Split(';'));
 
     private static readonly Dictionary<Hex, string> _zooAnimals;
 
