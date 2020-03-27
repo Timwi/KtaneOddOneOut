@@ -143,7 +143,7 @@ public class OddOneOutModule : MonoBehaviour
         // Raiding Temples
         "Indiana;Francis;Robert;Clara;Sandy;Nate;Allan;Carlos;Shelley;Michael;Trini".Split(';'),
         // Retirement
-        "Eliza;Marg;Ruth;Sandi;Toni;Amie;Ben;Dave;Janet;John;Kirsty;Kris;Lucy;Mark;Sal;Frank;Jane;Lydia;Mike;Pat;Skye;Toby".Split(';'),
+        "Eliza;Marg;Ruth;Sandi;Toni;Amie;Ben;Dave;Janet;John;Kirsty;Kris;Lucy;Mark;Sal;Frank;Jane;Lydia;Mike;Pat;Skye;Toby;Bob".Split(';'),
         // Schlag den Bomb
         "Albert;Cori;Cory;Daniel;Don;Edgar;Elsa;Eris;Gale;Greg;Greta;Harry;Isolde;Julia;Julie;Lisa;Millie;Ozy;Ozzy;Paula;Peter;Rob;Ron;Spike;Tina;Tommy;Val".Split(';'),
         // Subways
