@@ -1330,6 +1330,7 @@ public class OddOneOutModule : MonoBehaviour
 
         LedPuzzleIndicator.material.color = PuzzleIndicatorColors[_puzzleLedColor];
         ColorblindIndicator.text = _puzzleLedColor == 0 ? "" : "RYGTBPI".Substring(_puzzleLedColor - 1, 1);
+        _curCoroutine = null;
     }
 
     private KMSelectable.OnInteractHandler pressedDown(int i)
@@ -1463,6 +1464,21 @@ public class OddOneOutModule : MonoBehaviour
             case "4": case "bl": case "lb": yield return new[] { Buttons[3] }; break;
             case "5": case "bm": case "mb": case "bc": case "cb": yield return new[] { Buttons[4] }; break;
             case "6": case "br": case "rb": yield return new[] { Buttons[5] }; break;
+        }
+    }
+
+    IEnumerator TwitchHandleForcedSolve()
+    {
+        while (_curStage < 6)
+        {
+            while (_curCoroutine != null)
+                yield return true;
+
+            var btnIx = _stages[_curStage].CorrectIndex;
+            Buttons[btnIx].OnInteract();
+            yield return new WaitForSeconds(.1f);
+            Buttons[btnIx].OnInteractEnded();
+            yield return new WaitForSeconds(.1f);
         }
     }
 }
