@@ -1451,7 +1451,7 @@ public class OddOneOutModule : MonoBehaviour
             yield break;
         }
 
-        var match = Regex.Match(command, @"^\s*press\s+([1-6]|[TB][LMCR]|[LMCR][TB])\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        var match = Regex.Match(command, @"^\s*(?:press\s+)?([1-6]|[TB][LMCR]|[LMCR][TB])\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
         if (!match.Success)
             yield break;
 
