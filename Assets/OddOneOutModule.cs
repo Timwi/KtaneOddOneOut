@@ -1405,7 +1405,7 @@ public class OddOneOutModule : MonoBehaviour
     {
         if (Regex.IsMatch(command, @"^\s*colorblind\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
         {
-            ColorblindIndicator.gameObject.SetActive(true);
+            ColorblindIndicator.gameObject.SetActive(!ColorblindIndicator.gameObject.activeSelf);
             yield return null;
             yield break;
         }
