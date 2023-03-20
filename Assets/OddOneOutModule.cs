@@ -1387,9 +1387,13 @@ public class OddOneOutModule : MonoBehaviour
                 SetStage(0);
             }
             else if (i == _stages[_curStage].CorrectIndex)
+            {
+                Debug.LogFormat(@"[Odd One Out #{0}] Correct button pressed. Moving on to stage {1}.", _moduleId, _curStage + 2);
                 SetStage(_curStage + 1);
+            }
             else
             {
+                Debug.LogFormat(@"[Odd One Out #{0}] {1} pressed. Striking and resetting.", _moduleId, new[] { "TL", "TM", "TR", "BL", "BM", "BR" }[i]);
                 Module.HandleStrike();
                 SetStage(0);
             }
@@ -1398,7 +1402,7 @@ public class OddOneOutModule : MonoBehaviour
 
 
 #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"!{0} press 1 [number in reading order] | !{0} press TL [TL, TM, TR, BL, BM, BR] | !{0} cycle | !{0} reset | !{0} colorblind";
+    private readonly string TwitchHelpMessage = @"!{0} press 1 [number in reading order] | !{0} press TL [TL, TM, TR, BL, BM, BR] | !{0} press 1 2 3 | !{0} cycle | !{0} hover TL [hover over one button] | !{0} hover 1 | !{0} reset | !{0} colorblind";
 #pragma warning restore 414
 
     IEnumerator ProcessTwitchCommand(string command)
@@ -1423,48 +1427,70 @@ public class OddOneOutModule : MonoBehaviour
         {
             yield return null;
 
-            MethodInfo highlightMethod = null;
-            object enumValue = null;
-
             for (int i = 0; i < 6; i++)
+                yield return tpHighlight(i);
+
+            _curHover = null;
+            Display.text = "";
+            yield break;
+        }
+
+        Match match;
+        if ((match = Regex.Match(command, @"^\s*(?:press\s+)?([1-6]|[TB][LMCR]|[LMCR][TB])\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)).Success)
+        {
+            yield return null;
+            switch (match.Groups[1].Value.ToLowerInvariant())
             {
-                // Hacky time! Use Reflection to get the game to show the button highlight
-                var h = Buttons[i].Highlight.GetComponent("Highlightable");
-                if (highlightMethod == null)
-                {
-                    var e = h.GetType().GetNestedType("HighlightTypeEnum", BindingFlags.Public);
-                    highlightMethod = h.GetType().GetMethod("On", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(bool), e }, null);
-                    enumValue = Enum.ToObject(e, 1);
-                }
+                case "1": case "tl": case "lt": yield return new[] { Buttons[0] }; break;
+                case "2": case "tm": case "mt": case "tc": case "ct": yield return new[] { Buttons[1] }; break;
+                case "3": case "tr": case "rt": yield return new[] { Buttons[2] }; break;
+                case "4": case "bl": case "lb": yield return new[] { Buttons[3] }; break;
+                case "5": case "bm": case "mb": case "bc": case "cb": yield return new[] { Buttons[4] }; break;
+                case "6": case "br": case "rb": yield return new[] { Buttons[5] }; break;
+            }
+            yield break;
+        }
 
-                highlightMethod.Invoke(h, new[] { true, enumValue });
-                if (_showOnHover[i] != null)
-                    setHoverText(_showOnHover[i]);
-
-                yield return new WaitForSeconds(1.5f);
-
-                highlightMethod.Invoke(h, new[] { false, enumValue });
+        if ((match = Regex.Match(command, @"^\s*(?:display|hover)\s+([1-6]|[TB][LMCR]|[LMCR][TB])\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)).Success)
+        {
+            yield return null;
+            Debug.LogFormat(@"<Odd One Out #{0}> TP show command 1.", _moduleId);
+            switch (match.Groups[1].Value.ToLowerInvariant())
+            {
+                case "1": case "tl": case "lt": yield return tpHighlight(0); break;
+                case "2": case "tm": case "mt": case "tc": case "ct": yield return tpHighlight(1); break;
+                case "3": case "tr": case "rt": yield return tpHighlight(2); break;
+                case "4": case "bl": case "lb": yield return tpHighlight(3); break;
+                case "5": case "bm": case "mb": case "bc": case "cb": yield return tpHighlight(4); break;
+                case "6": case "br": case "rb": yield return tpHighlight(5); break;
             }
             _curHover = null;
             Display.text = "";
-            yield return new WaitForSeconds(.5f);
             yield break;
         }
+    }
 
-        var match = Regex.Match(command, @"^\s*(?:press\s+)?([1-6]|[TB][LMCR]|[LMCR][TB])\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-        if (!match.Success)
-            yield break;
+    MethodInfo tpHighlightMethod = null;
+    object tpEnumValue = null;
 
-        yield return null;
-        switch (match.Groups[1].Value.ToLowerInvariant())
+    private IEnumerator tpHighlight(int btn)
+    {
+        // Hacky time! Use Reflection to get the game to show the button highlight
+        var h = Buttons[btn].Highlight.GetComponent("Highlightable");
+        if (tpHighlightMethod == null)
         {
-            case "1": case "tl": case "lt": yield return new[] { Buttons[0] }; break;
-            case "2": case "tm": case "mt": case "tc": case "ct": yield return new[] { Buttons[1] }; break;
-            case "3": case "tr": case "rt": yield return new[] { Buttons[2] }; break;
-            case "4": case "bl": case "lb": yield return new[] { Buttons[3] }; break;
-            case "5": case "bm": case "mb": case "bc": case "cb": yield return new[] { Buttons[4] }; break;
-            case "6": case "br": case "rb": yield return new[] { Buttons[5] }; break;
+            var e = h.GetType().GetNestedType("HighlightTypeEnum", BindingFlags.Public);
+            tpHighlightMethod = h.GetType().GetMethod("On", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(bool), e }, null);
+            tpEnumValue = Enum.ToObject(e, 1);
         }
+
+        tpHighlightMethod.Invoke(h, new[] { true, tpEnumValue });
+        if (_showOnHover[btn] != null)
+            setHoverText(_showOnHover[btn]);
+
+        yield return new WaitForSeconds(1.5f);
+
+        tpHighlightMethod.Invoke(h, new[] { false, tpEnumValue });
     }
 
     IEnumerator TwitchHandleForcedSolve()
