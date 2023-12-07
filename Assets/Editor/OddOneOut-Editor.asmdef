@@ -1,0 +1,10 @@
+{
+  "name": "OddOneOut-Editor",
+  "references": [
+    "OddOneOut"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": []
+}
